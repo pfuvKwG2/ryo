@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
   <title>🍓もてぎ2DAYS ガキ連れ遠征ガイド🏕️</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -101,7 +102,8 @@
       font-weight: 900;
       font-size: 14px;
       border-radius: 20px;
-      transform: rotate(-2deg);
+      --sticker-rot: -2deg;
+      transform: rotate(var(--sticker-rot));
       box-shadow:
         0 4px 12px rgba(255, 204, 0, 0.4),
         inset 0 -2px 0 rgba(0,0,0,0.1);
@@ -111,7 +113,7 @@
     .sticker.pink {
       background: linear-gradient(135deg, var(--berry), var(--berry-light));
       color: white;
-      transform: rotate(2deg);
+      --sticker-rot: 2deg;
       box-shadow:
         0 4px 12px rgba(255, 51, 102, 0.4),
         inset 0 -2px 0 rgba(0,0,0,0.1);
@@ -119,7 +121,7 @@
 
     .sticker.mint {
       background: linear-gradient(135deg, var(--mint), var(--mint-light));
-      transform: rotate(-3deg);
+      --sticker-rot: -3deg;
       box-shadow:
         0 4px 12px rgba(0, 217, 163, 0.4),
         inset 0 -2px 0 rgba(0,0,0,0.1);
@@ -433,10 +435,112 @@
       color: var(--ink-soft);
     }
 
+    .content > * {
+      animation: fade-up 0.8s ease both;
+    }
+
+    .content > *:nth-child(2) { animation-delay: 0.08s; }
+    .content > *:nth-child(3) { animation-delay: 0.16s; }
+    .content > *:nth-child(4) { animation-delay: 0.24s; }
+    .content > *:nth-child(5) { animation-delay: 0.32s; }
+
+    .sticker { animation: floaty 4.5s ease-in-out infinite; }
+    .photo-item { animation: photo-pop 0.9s ease both; }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0) rotate(var(--sticker-rot)); }
+      50% { transform: translateY(-6px) rotate(var(--sticker-rot)); }
+    }
+
+    @keyframes photo-pop {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 960px) {
+      .page {
+        width: 100%;
+        min-height: auto;
+        margin: 0;
+        padding: 22px 16px 28px;
+        box-shadow: none;
+      }
+
+      .hero h1 { font-size: 36px; }
+      .hero .date { font-size: 15px; }
+
+      .photo-chaos {
+        height: auto;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .photo-item {
+        position: static;
+        width: 100% !important;
+        height: auto !important;
+        transform: none !important;
+        display: grid;
+        gap: 6px;
+      }
+
+      .photo-item img {
+        height: auto;
+        aspect-ratio: 4 / 3;
+      }
+
+      .photo-item .label {
+        position: static;
+        transform: none;
+        margin: 0 auto;
+      }
+
+      .time-row-with-photo {
+        grid-template-columns: 70px 1fr;
+      }
+
+      .time-row-with-photo .photo-thumbnail {
+        grid-column: 1 / -1;
+        width: 100%;
+        height: 160px;
+        transform: none;
+      }
+
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+      .gallery-item { transform: none; }
+      .gallery-item img { height: 110px; }
+
+      .photo-grid { grid-template-columns: repeat(2, 1fr); }
+      .photo-grid img { height: 120px; }
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 30px; }
+      .sticker { font-size: 12px; padding: 6px 12px; }
+      .timeline { padding: 18px; }
+      .day-title { font-size: 18px; }
+      .time { font-size: 12px; }
+      .activity { font-size: 14px; }
+      .photo-chaos { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: 1fr; }
+      .photo-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+
     @page { size: A4; margin: 0; }
     @media print {
       body { background: white; }
       .page { box-shadow: none; margin: 0; }
+      * { animation: none !important; transition: none !important; }
     }
   </style>
 </head>
