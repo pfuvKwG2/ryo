@@ -34,9 +34,12 @@
       font-family: "M PLUS Rounded 1c", "Kosugi Maru", "Zen Maru Gothic", sans-serif;
       font-weight: 400;
       line-height: 1.7;
+      overflow-x: hidden;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
+
+    img { max-width: 100%; }
 
     h1, h2, h3 {
       font-family: "Dela Gothic One", "M PLUS Rounded 1c", sans-serif;
@@ -44,10 +47,11 @@
     }
 
     .page {
-      width: 210mm;
+      width: min(210mm, 100%);
+      max-width: 100%;
       min-height: 297mm;
       margin: 0 auto;
-      padding: 18mm;
+      padding: clamp(16px, 3vw, 18mm);
       background: var(--cream);
       position: relative;
       overflow: hidden;
@@ -161,46 +165,110 @@
 
     .photo-chaos {
       position: relative;
-      height: 420px;
-      margin: 25px 0;
+      margin: 28px 0 22px;
+      padding: 18px;
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(255, 204, 0, 0.18), transparent 45%),
+        radial-gradient(circle at 82% 12%, rgba(0, 217, 163, 0.18), transparent 50%),
+        radial-gradient(circle at 30% 88%, rgba(255, 51, 102, 0.16), transparent 55%),
+        rgba(255, 255, 255, 0.7);
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-auto-rows: 28px;
+      gap: 12px;
+      overflow: hidden;
+      border: 3px dashed rgba(255, 204, 0, 0.4);
+    }
+
+    .photo-chaos::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border-radius: 20px;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.6) 1px, transparent 1px);
+      background-size: 18px 18px;
+      opacity: 0.55;
+      pointer-events: none;
     }
 
     .photo-item {
-      position: absolute;
-      background: white;
+      position: relative;
+      display: grid;
       padding: 10px;
+      background: white;
+      border-radius: 16px;
+      border: 4px solid var(--frame, rgba(255, 255, 255, 0.9));
       box-shadow:
-        0 8px 20px rgba(0,0,0,0.15),
-        0 2px 4px rgba(0,0,0,0.1);
-      border-radius: 8px;
+        0 10px 24px rgba(0,0,0,0.16),
+        0 3px 6px rgba(0,0,0,0.1);
+      transform: rotate(var(--tilt, 0deg));
+      z-index: 1;
     }
 
     .photo-item img {
       display: block;
       width: 100%;
       height: 100%;
+      aspect-ratio: 4 / 3;
       object-fit: cover;
-      border-radius: 4px;
+      border-radius: 12px;
     }
 
     .photo-item .label {
       position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--ink);
+      top: 10px;
+      left: 10px;
+      background: var(--label-bg, var(--ink));
       color: white;
-      padding: 4px 12px;
-      border-radius: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
       font-size: 12px;
       font-weight: 700;
       white-space: nowrap;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border: 2px solid white;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
     }
 
-    .photo-item.label-pink .label { background: var(--berry); }
-    .photo-item.label-mint .label { background: var(--mint); }
-    .photo-item.label-sun .label { background: var(--sun); color: var(--ink); }
+    .photo-item.label-pink { --label-bg: var(--berry); }
+    .photo-item.label-mint { --label-bg: var(--mint); }
+    .photo-item.label-sun { --label-bg: var(--sun); }
+    .photo-item.label-sun .label { color: var(--ink); }
+
+    .hero-card--strawberry {
+      grid-column: 1 / span 6;
+      grid-row: 1 / span 7;
+      --tilt: -2deg;
+      --frame: rgba(255, 102, 153, 0.35);
+    }
+
+    .hero-card--cabin {
+      grid-column: 7 / span 6;
+      grid-row: 1 / span 5;
+      --tilt: 2deg;
+      --frame: rgba(0, 217, 163, 0.35);
+    }
+
+    .hero-card--park {
+      grid-column: 3 / span 6;
+      grid-row: 7 / span 6;
+      --tilt: 1.5deg;
+      --frame: rgba(255, 204, 0, 0.4);
+    }
+
+    .hero-card--campfire {
+      grid-column: 9 / span 4;
+      grid-row: 6 / span 4;
+      --tilt: -2.5deg;
+      --frame: rgba(255, 153, 102, 0.4);
+    }
+
+    .hero-card--onsen {
+      grid-column: 1 / span 4;
+      grid-row: 8 / span 4;
+      --tilt: 2.5deg;
+      --frame: rgba(255, 51, 102, 0.35);
+    }
 
     .timeline {
       background: white;
@@ -365,19 +433,183 @@
       margin: 10px 0;
     }
 
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+    .photo-slider {
+      position: relative;
       margin: 15px 0;
+      padding: 6px 0;
+    }
+
+    .photo-slider::before,
+    .photo-slider::after {
+      content: "";
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      width: 40px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .photo-slider::before {
+      left: 0;
+      background: linear-gradient(90deg, rgba(255, 251, 240, 0.95), rgba(255, 251, 240, 0));
+    }
+
+    .photo-slider::after {
+      right: 0;
+      background: linear-gradient(-90deg, rgba(255, 251, 240, 0.95), rgba(255, 251, 240, 0));
+    }
+
+    .photo-grid {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 8px 8px 16px;
+      scroll-snap-type: x mandatory;
+      scroll-padding: 12px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(42, 37, 34, 0.35) transparent;
+    }
+
+    .photo-grid::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .photo-grid::-webkit-scrollbar-thumb {
+      background: rgba(42, 37, 34, 0.25);
+      border-radius: 999px;
     }
 
     .photo-grid img {
-      width: 100%;
-      height: 140px;
+      flex: 0 0 220px;
+      width: 220px;
+      height: 150px;
       object-fit: cover;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+      scroll-snap-align: center;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .photo-grid img:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 22px rgba(0,0,0,0.16);
+    }
+
+    .facility-links {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      margin: 20px 0;
+    }
+
+    .facility-links h3 {
+      font-size: 20px;
+      color: var(--berry);
+      margin-bottom: 12px;
+    }
+
+    .facility-links ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .facility-links li {
+      font-size: 14px;
+      color: var(--ink-soft);
+      overflow-wrap: anywhere;
+    }
+
+    .facility-links a {
+      color: var(--berry);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .facility-links a:hover { text-decoration: underline; }
+
+    .facility-links .note {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-top: 10px;
+    }
+
+    .memo-board {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 18px;
+      border-radius: 16px;
+      border: 2px dashed #e0e0e0;
+      margin: 20px 0;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+
+    .memo-board h3 {
+      font-size: 18px;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .memo-section {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed #ddd;
+    }
+
+    .memo-section h4 {
+      font-size: 14px;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .memo-list {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 6px 10px;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+
+    .memo-list dt {
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .memo-list dd {
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .memo-board a { color: var(--berry); }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--ink);
+      font-weight: 900;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.14);
+      z-index: 2;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .slider-btn.prev { left: 8px; }
+    .slider-btn.next { right: 8px; }
+
+    .slider-btn:hover {
+      transform: translateY(-50%) scale(1.06);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.2);
     }
 
     .checklist {
@@ -464,7 +696,6 @@
 
     @media (max-width: 960px) {
       .page {
-        width: 100%;
         min-height: auto;
         margin: 0;
         padding: 22px 16px 28px;
@@ -475,30 +706,33 @@
       .hero .date { font-size: 15px; }
 
       .photo-chaos {
-        height: auto;
-        display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
+        grid-auto-rows: auto;
+        padding: 14px;
       }
 
       .photo-item {
-        position: static;
-        width: 100% !important;
-        height: auto !important;
-        transform: none !important;
-        display: grid;
-        gap: 6px;
+        transform: none;
+      }
+
+      .hero-card--strawberry,
+      .hero-card--cabin,
+      .hero-card--park,
+      .hero-card--campfire,
+      .hero-card--onsen {
+        grid-column: auto !important;
+        grid-row: auto !important;
       }
 
       .photo-item img {
         height: auto;
-        aspect-ratio: 4 / 3;
       }
 
       .photo-item .label {
         position: static;
-        transform: none;
-        margin: 0 auto;
+        margin: 8px auto 0;
+        white-space: normal;
+        text-align: center;
       }
 
       .time-row-with-photo {
@@ -516,8 +750,18 @@
       .gallery-item { transform: none; }
       .gallery-item img { height: 110px; }
 
-      .photo-grid { grid-template-columns: repeat(2, 1fr); }
-      .photo-grid img { height: 120px; }
+      .photo-slider::before,
+      .photo-slider::after { width: 26px; }
+
+      .photo-grid {
+        scroll-padding: 8px;
+      }
+
+      .photo-grid img {
+        flex-basis: 72%;
+        width: 72%;
+        height: 170px;
+      }
     }
 
     @media (max-width: 640px) {
@@ -529,7 +773,18 @@
       .activity { font-size: 14px; }
       .photo-chaos { grid-template-columns: 1fr; }
       .gallery { grid-template-columns: 1fr; }
-      .photo-grid { grid-template-columns: 1fr; }
+      .photo-grid {
+        padding: 6px 6px 14px;
+      }
+
+      .photo-grid img {
+        flex-basis: 86%;
+        width: 86%;
+        height: 190px;
+      }
+
+      .slider-btn { width: 32px; height: 32px; }
+      .memo-list { grid-template-columns: 1fr; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -539,7 +794,30 @@
     @page { size: A4; margin: 0; }
     @media print {
       body { background: white; }
-      .page { box-shadow: none; margin: 0; }
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0;
+        padding: 18mm;
+        box-shadow: none;
+      }
+      .photo-slider::before,
+      .photo-slider::after,
+      .slider-btn { display: none; }
+      .photo-grid {
+        overflow: visible;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        padding: 0;
+      }
+      .photo-grid img {
+        flex: none;
+        width: 100%;
+        height: 140px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        transform: none;
+      }
       * { animation: none !important; transition: none !important; }
     }
   </style>
@@ -562,23 +840,23 @@
       </section>
 
       <div class="photo-chaos">
-        <div class="photo-item label-pink" style="width: 220px; height: 160px; top: 10px; left: 20px; transform: rotate(-5deg);">
+        <div class="photo-item hero-card--strawberry label-pink">
           <img src="./assets/images/optimized/mashiko_ichigo_1.jpg" alt="いちご">
           <span class="label">🍓 益子でいちご</span>
         </div>
-        <div class="photo-item label-mint" style="width: 200px; height: 150px; top: 20px; right: 30px; transform: rotate(8deg);">
+        <div class="photo-item hero-card--cabin label-mint">
           <img src="./assets/images/optimized/motegi_logcabin_1.jpg" alt="ログキャビン">
           <span class="label">🏕️ 6畳の現実</span>
         </div>
-        <div class="photo-item label-sun" style="width: 210px; height: 155px; top: 180px; left: 40px; transform: rotate(3deg);">
+        <div class="photo-item hero-card--park label-sun">
           <img src="./assets/images/optimized/motegi_park_1.jpg" alt="パーク">
           <span class="label">🎪 ガキ放電</span>
         </div>
-        <div class="photo-item" style="width: 180px; height: 130px; top: 190px; right: 50px; transform: rotate(-6deg);">
+        <div class="photo-item hero-card--campfire label-sun">
           <img src="./assets/images/optimized/campfire.jpg" alt="焚き火">
           <span class="label">🔥 焚き火で優勝</span>
         </div>
-        <div class="photo-item label-pink" style="width: 190px; height: 140px; bottom: 10px; left: 260px; transform: rotate(4deg);">
+        <div class="photo-item hero-card--onsen label-pink">
           <img src="./assets/images/optimized/nozomi_bath_2.jpg" alt="温泉">
           <span class="label">♨️ のぞみの湯</span>
         </div>
@@ -704,65 +982,85 @@
       <div class="facility-section">
         <h3>🍓 益子観光いちご団地</h3>
         <p>北関東最大級、100棟のハウスで8品種食い放題45分。とちおとめ、とちあいか、スカイベリー全部試せる。甘いもん好きなガキには天国。</p>
-        <div class="photo-grid">
-          <img src="./assets/images/optimized/mashiko_ichigo_1.jpg" alt="益子いちご1">
-          <img src="./assets/images/optimized/mashiko_ichigo_2.jpg" alt="益子いちご2">
-          <img src="./assets/images/optimized/mashiko_ichigo_3.jpg" alt="益子いちご3">
-          <img src="./assets/images/optimized/mashiko_ichigo_4.jpg" alt="益子いちご4">
-          <img src="./assets/images/optimized/mashiko_ichigo_5.jpg" alt="益子いちご5">
-          <img src="./assets/images/optimized/mashiko_ichigo_6.jpg" alt="益子いちご6">
+        <div class="photo-slider" data-slider>
+          <button class="slider-btn prev" type="button" aria-label="前へ">&#8249;</button>
+          <div class="photo-grid">
+            <img src="./assets/images/optimized/mashiko_ichigo_1.jpg" alt="益子いちご1">
+            <img src="./assets/images/optimized/mashiko_ichigo_2.jpg" alt="益子いちご2">
+            <img src="./assets/images/optimized/mashiko_ichigo_3.jpg" alt="益子いちご3">
+            <img src="./assets/images/optimized/mashiko_ichigo_4.jpg" alt="益子いちご4">
+            <img src="./assets/images/optimized/mashiko_ichigo_5.jpg" alt="益子いちご5">
+            <img src="./assets/images/optimized/mashiko_ichigo_6.jpg" alt="益子いちご6">
+          </div>
+          <button class="slider-btn next" type="button" aria-label="次へ">&#8250;</button>
         </div>
       </div>
 
       <div class="facility-section">
         <h3>🏪 道の駅もてぎ</h3>
         <p>いちご食った後の休憩ポイント。SL遊具でガキ放電、親は深呼吸。土日祝の12:00と14:30にSLが通過するから写真撮れるで。ゆず塩ラーメンと手作りアイスが名物。道の駅で地元ドリンク買ってHP回復したら即出発。長居は時間の無駄やぞ。</p>
-        <div class="photo-grid">
-          <img src="./assets/images/optimized/michinoeki_sl.jpg" alt="SL遊具">
-          <img src="./assets/images/optimized/michinoeki_ice.jpg" alt="手作りアイス">
-          <img src="./assets/images/optimized/michinoeki_food.jpg" alt="ゆず塩ラーメン">
-          <img src="./assets/images/optimized/motegi_michinoeki_1.jpg" alt="道の駅外観">
-          <img src="./assets/images/optimized/motegi_michinoeki_2.jpg" alt="道の駅施設">
-          <img src="./assets/images/optimized/michinoeki_park.jpg" alt="公園">
+        <div class="photo-slider" data-slider>
+          <button class="slider-btn prev" type="button" aria-label="前へ">&#8249;</button>
+          <div class="photo-grid">
+            <img src="./assets/images/optimized/michinoeki_sl.jpg" alt="SL遊具">
+            <img src="./assets/images/optimized/michinoeki_ice.jpg" alt="手作りアイス">
+            <img src="./assets/images/optimized/michinoeki_food.jpg" alt="ゆず塩ラーメン">
+            <img src="./assets/images/optimized/motegi_michinoeki_1.jpg" alt="道の駅外観">
+            <img src="./assets/images/optimized/motegi_michinoeki_2.jpg" alt="道の駅施設">
+            <img src="./assets/images/optimized/michinoeki_park.jpg" alt="公園">
+          </div>
+          <button class="slider-btn next" type="button" aria-label="次へ">&#8250;</button>
         </div>
       </div>
 
       <div class="facility-section">
         <h3>🏕️ ログキャビン（森と星空のキャンプヴィレッジ）</h3>
         <p><strong>9㎡＝約6畳に大人2＋ガキ2で寝る狂気。</strong>2段ベッドは上段1.8m。寝相悪いガキは落下して即死確定。布団の取り合いでバトル必至。風呂なし確定でのぞみの湯まで徒歩3-5分。冬の夜22時に外歩くとか修行か？防寒ガチらんと凍死するぞ。でもまあキャンプってそういうもんやろ（諦め）。</p>
-        <div class="photo-grid">
-          <img src="./assets/images/optimized/motegi_logcabin_1.jpg" alt="ログキャビン外観">
-          <img src="./assets/images/optimized/motegi_logcabin_2.jpg" alt="ログキャビン内装">
-          <img src="./assets/images/optimized/motegi_logcabin_3.jpg" alt="ログキャビン設備">
-          <img src="./assets/images/optimized/campfire.jpg" alt="焚き火">
-          <img src="./assets/images/optimized/bbq.jpg" alt="BBQ">
-          <img src="./assets/images/optimized/forest.jpg" alt="森">
+        <div class="photo-slider" data-slider>
+          <button class="slider-btn prev" type="button" aria-label="前へ">&#8249;</button>
+          <div class="photo-grid">
+            <img src="./assets/images/optimized/motegi_logcabin_1.jpg" alt="ログキャビン外観">
+            <img src="./assets/images/optimized/motegi_logcabin_2.jpg" alt="ログキャビン内装">
+            <img src="./assets/images/optimized/motegi_logcabin_3.jpg" alt="ログキャビン設備">
+            <img src="./assets/images/optimized/campfire.jpg" alt="焚き火">
+            <img src="./assets/images/optimized/bbq.jpg" alt="BBQ">
+            <img src="./assets/images/optimized/forest.jpg" alt="森">
+          </div>
+          <button class="slider-btn next" type="button" aria-label="次へ">&#8250;</button>
         </div>
       </div>
 
       <div class="facility-section">
         <h3>🎢 もてぎパーク（ハローウッズ）</h3>
         <p>カート、アスレチック、ジップライン、森の工作体験。ガキが喜ぶやつ全部ある。営業10:00-16:00で冬は早仕舞い。体力ゼロまで遊ばせて車で即寝させるのが正解。</p>
-        <div class="photo-grid">
-          <img src="./assets/images/optimized/motegi_park_1.jpg" alt="パーク1">
-          <img src="./assets/images/optimized/motegi_park_2.jpg" alt="パーク2">
-          <img src="./assets/images/optimized/motegi_park_4.jpg" alt="パーク3">
-          <img src="./assets/images/optimized/motegi_attraction_carbike2.jpg" alt="カート">
-          <img src="./assets/images/optimized/motegi_attraction_carbike3.jpg" alt="乗り物">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJRKSnK9yF6X0zlNdEmpk4AOTvlXR3yNVO7g&s" alt="もてぎパーク新画像1">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcBEJZs0VknumNOx_s777blV1AcXQljzd1rg&s" alt="もてぎパーク新画像2">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTglmrCJpJTq1fyEVpDd9MaRtUuHFu1x_fgFg&s" alt="もてぎパーク新画像3">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgunJhXLfLVJ9lICLWX3xtayY5xyRhDW1mYA&s" alt="もてぎパーク新画像4">
+        <div class="photo-slider" data-slider>
+          <button class="slider-btn prev" type="button" aria-label="前へ">&#8249;</button>
+          <div class="photo-grid">
+            <img src="./assets/images/optimized/motegi_park_1.jpg" alt="パーク1">
+            <img src="./assets/images/optimized/motegi_park_2.jpg" alt="パーク2">
+            <img src="./assets/images/optimized/motegi_park_4.jpg" alt="パーク3">
+            <img src="./assets/images/optimized/motegi_attraction_carbike2.jpg" alt="カート">
+            <img src="./assets/images/optimized/motegi_attraction_carbike3.jpg" alt="乗り物">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJRKSnK9yF6X0zlNdEmpk4AOTvlXR3yNVO7g&s" alt="もてぎパーク新画像1">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcBEJZs0VknumNOx_s777blV1AcXQljzd1rg&s" alt="もてぎパーク新画像2">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTglmrCJpJTq1fyEVpDd9MaRtUuHFu1x_fgFg&s" alt="もてぎパーク新画像3">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgunJhXLfLVJ9lICLWX3xtayY5xyRhDW1mYA&s" alt="もてぎパーク新画像4">
+          </div>
+          <button class="slider-btn next" type="button" aria-label="次へ">&#8250;</button>
         </div>
       </div>
 
       <div class="facility-section">
         <h3>♨️ のぞみの湯</h3>
         <p>大浴場・露天風呂・シルキーバス完備。営業15:00-22:00、翌朝6:00-9:00。宿泊者は無料。キャビンから徒歩3-5分。冬の夜は防寒必須やぞ。朝風呂は目覚ましに最適。</p>
-        <div class="photo-grid">
-          <img src="./assets/images/optimized/nozomi_bath_1.jpg" alt="大浴場">
-          <img src="./assets/images/optimized/nozomi_bath_2.jpg" alt="露天風呂">
-          <img src="./assets/images/optimized/nozomi_bath_3.jpg" alt="風呂施設">
+        <div class="photo-slider" data-slider>
+          <button class="slider-btn prev" type="button" aria-label="前へ">&#8249;</button>
+          <div class="photo-grid">
+            <img src="./assets/images/optimized/nozomi_bath_1.jpg" alt="大浴場">
+            <img src="./assets/images/optimized/nozomi_bath_2.jpg" alt="露天風呂">
+            <img src="./assets/images/optimized/nozomi_bath_3.jpg" alt="風呂施設">
+          </div>
+          <button class="slider-btn next" type="button" aria-label="次へ">&#8250;</button>
         </div>
       </div>
 
@@ -854,11 +1152,110 @@
         </p>
       </div>
 
+      
+      <div class="facility-links">
+        <h3>?? 施設リンク（検索）</h3>
+        <ul>
+          <li><a href="https://www.google.com/search?q=益子観光いちご団地" target="_blank" rel="noopener">益子観光いちご団地</a></li>
+          <li><a href="https://www.google.com/search?q=道の駅もてぎ" target="_blank" rel="noopener">道の駅もてぎ</a></li>
+          <li><a href="https://www.google.com/search?q=モビリティリゾートもてぎ+ログキャビン" target="_blank" rel="noopener">森と星空のキャンプヴィレッジ（ログキャビン）</a></li>
+          <li><a href="https://www.google.com/search?q=もてぎパーク+ハローウッズ" target="_blank" rel="noopener">もてぎパーク（ハローウッズ）</a></li>
+          <li><a href="https://www.google.com/search?q=のぞみの湯+もてぎ" target="_blank" rel="noopener">のぞみの湯</a></li>
+        </ul>
+        <div class="note">※ 公式URLが分かったら差し替えでOK。</div>
+      </div>
+
+      <div class="memo-board">
+        <h3>?? 予約メモ（控え）</h3>
+
+        <div class="memo-section">
+          <h4>レンタカー</h4>
+          <dl class="memo-list">
+            <dt>ご予約番号</dt><dd>005060010000000000000000069605</dd>
+            <dt>ご来店店舗</dt><dd>ニコニコレンタカー浅草橋店</dd>
+            <dt>店舗住所</dt><dd>東京都台東区浅草橋5-10-6</dd>
+            <dt>店舗連絡先</dt><dd>03-5809-3536</dd>
+            <dt>店舗アクセス</dt><dd><a href="https://www.2525r.com/tokyo/taito/store-00506-001.html" target="_blank" rel="noopener">https://www.2525r.com/tokyo/taito/store-00506-001.html</a></dd>
+            <dt>出発日時</dt><dd>2026-02-12 08:00</dd>
+            <dt>帰着日時</dt><dd>2026-02-13 20:00</dd>
+            <dt>ご利用時間</dt><dd>36時間</dd>
+            <dt>車両クラス</dt><dd>Sクラス</dd>
+            <dt>車両名</dt><dd>ヴィッツ･5人乗（シルバー系）</dd>
+            <dt>禁煙／喫煙</dt><dd>禁煙車</dd>
+            <dt>ご利用コース</dt><dd>1泊＋1日（36時間以内）</dd>
+            <dt>標準装備品</dt><dd>スタッドレスタイヤ(S)、ビルトインナビ</dd>
+            <dt>オプション</dt><dd>なし</dd>
+            <dt>補償制度</dt><dd>なし</dd>
+            <dt>追加サービス</dt><dd>なし</dd>
+            <dt>お見積り額</dt><dd>10,225円（会員価格）※事前決済済み</dd>
+          </dl>
+        </div>
+
+        <div class="memo-section">
+          <h4>ホテル</h4>
+          <dl class="memo-list">
+            <dt>予約受付番号</dt><dd>RYa0m3pz29</dd>
+            <dt>予約受付日</dt><dd>2025-12-23(火)</dd>
+            <dt>ホテル名</dt><dd>モビリティリゾートもてぎ</dd>
+            <dt>住所</dt><dd>〒321-3597 栃木県 芳賀郡茂木町桧山120-1</dd>
+            <dt>宿泊施設電話番号</dt><dd>0285-64-0489</dd>
+            <dt>チェックイン</dt><dd>2026-02-12(木) 18:00</dd>
+            <dt>チェックアウト</dt><dd>2026-02-13(金)</dd>
+            <dt>宿泊代表者氏名</dt><dd>さなだ ひろあき様</dd>
+            <dt>申込人数</dt><dd>4人（大人2人・子供2人）／幼児(食事・布団不要): 2人</dd>
+            <dt>申込部屋数</dt><dd>1部屋</dd>
+            <dt>部屋タイプ</dt><dd>【森と星空のキャンプヴィレッジ】エアコン完備ログキャビン(log)</dd>
+            <dt>宿泊プラン</dt><dd>【キャンプ／素泊まり】お日にち限定 ポップコーンづくり＆焚き火体験！夜は持ち込みBBQ！</dd>
+            <dt>連絡先</dt><dd>2025年7月1日より 0285-64-0489</dd>
+          </dl>
+        </div>
+
+        <div class="memo-section">
+          <h4>チケット</h4>
+          <dl class="memo-list">
+            <dt>調査メモ</dt><dd>アソビューの「もてぎパーク ファミリープラン」が安そう。価格は要確認。</dd>
+            <dt>検索リンク</dt><dd><a href="https://www.google.com/search?q=アソビュー+もてぎパーク+ファミリープラン" target="_blank" rel="noopener">アソビュー もてぎパーク ファミリープラン</a></dd>
+          </dl>
+        </div>
+
+        <div class="memo-section">
+          <h4>いちご農園 料金メモ</h4>
+          <dl class="memo-list">
+            <dt>人数条件</dt><dd>大人2人＋未就学2人（6歳／1歳）</dd>
+            <dt>備考</dt><dd>料金は公式/現地で確認。</dd>
+          </dl>
+        </div>
+      </div>
+
       <div class="footer" style="margin-top: 30px; font-size: 12px;">
         <p>🎉 楽しい2日間になるといいな。ガキも大人も無事帰還を祈る。🔥</p>
       </div>
     </div>
   </div>
+
+  <script>
+    (() => {
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const behavior = prefersReduced ? "auto" : "smooth";
+
+      document.querySelectorAll("[data-slider]").forEach((slider) => {
+        const track = slider.querySelector(".photo-grid");
+        const prev = slider.querySelector(".slider-btn.prev");
+        const next = slider.querySelector(".slider-btn.next");
+        if (!track || !prev || !next) return;
+
+        const scrollAmount = () => track.clientWidth * 0.85;
+
+        prev.addEventListener("click", () => {
+          track.scrollBy({ left: -scrollAmount(), behavior });
+        });
+
+        next.addEventListener("click", () => {
+          track.scrollBy({ left: scrollAmount(), behavior });
+        });
+      });
+    })();
+  </script>
 
 </body>
 </html>
