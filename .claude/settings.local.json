@@ -6,7 +6,14 @@
       "WebFetch(domain:www.mr-motegi.jp)",
       "Bash(mkdir:*)",
       "Bash(curl:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "WebFetch(domain:www.mashiko-kankoichigo.com)",
+      "WebFetch(domain:butayama.com)",
+      "WebFetch(domain:www.15dannchi.sakura.ne.jp)",
+      "WebFetch(domain:www.tochinavi.net)",
+      "WebFetch(domain:global.toyota)",
+      "WebFetch(domain:onsen.nifty.com)",
+      "WebFetch(domain:www.motegiplaza.com)"
     ]
   }
 }

@@ -31,6 +31,7 @@
       background: linear-gradient(135deg, #ffe6f0 0%, #fff9e6 50%, #e6f7ff 100%);
       color: var(--ink);
       font-family: "M PLUS Rounded 1c", "Kosugi Maru", "Zen Maru Gothic", sans-serif;
+      font-weight: 400;
       line-height: 1.7;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
@@ -55,7 +56,6 @@
 
     .page:last-child { page-break-after: auto; }
 
-    /* 背景装飾 - カラフル爆発 */
     .bg-deco {
       position: absolute;
       inset: 0;
@@ -93,7 +93,6 @@
       z-index: 1;
     }
 
-    /* ステッカー風バッジ */
     .sticker {
       display: inline-block;
       padding: 8px 18px;
@@ -126,7 +125,6 @@
         inset 0 -2px 0 rgba(0,0,0,0.1);
     }
 
-    /* ヒーローセクション */
     .hero {
       text-align: center;
       margin-bottom: 30px;
@@ -159,17 +157,16 @@
       margin: 20px 0;
     }
 
-    /* 写真グリッド - スクラップブック風 */
     .photo-chaos {
       position: relative;
-      height: 500px;
-      margin: 30px 0;
+      height: 420px;
+      margin: 25px 0;
     }
 
     .photo-item {
       position: absolute;
       background: white;
-      padding: 12px;
+      padding: 10px;
       box-shadow:
         0 8px 20px rgba(0,0,0,0.15),
         0 2px 4px rgba(0,0,0,0.1);
@@ -203,7 +200,6 @@
     .photo-item.label-mint .label { background: var(--mint); }
     .photo-item.label-sun .label { background: var(--sun); color: var(--ink); }
 
-    /* タイムライン */
     .timeline {
       background: white;
       padding: 25px;
@@ -263,20 +259,42 @@
 
     .activity strong {
       color: var(--ink);
-      font-weight: 900;
+      font-weight: 700;
     }
 
-    /* ギャラリーグリッド */
+    .time-row-with-photo {
+      position: relative;
+      display: grid;
+      grid-template-columns: 80px 1fr 140px;
+      gap: 12px;
+      margin: 10px 0;
+      align-items: start;
+    }
+
+    .time-row-with-photo .photo-thumbnail {
+      width: 140px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transform: rotate(-3deg);
+      border: 3px solid white;
+    }
+
+    .time-row-with-photo:nth-child(even) .photo-thumbnail {
+      transform: rotate(3deg);
+    }
+
     .gallery {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-      margin: 25px 0;
+      gap: 12px;
+      margin: 20px 0;
     }
 
     .gallery-item {
       background: white;
-      padding: 10px;
+      padding: 8px;
       border-radius: 12px;
       box-shadow: 0 6px 15px rgba(0,0,0,0.1);
       transform: rotate(0deg);
@@ -287,20 +305,19 @@
 
     .gallery-item img {
       width: 100%;
-      height: 140px;
+      height: 120px;
       object-fit: cover;
       border-radius: 8px;
     }
 
     .gallery-item .caption {
-      margin-top: 8px;
-      font-size: 13px;
+      margin-top: 6px;
+      font-size: 12px;
       font-weight: 700;
       text-align: center;
       color: var(--ink);
     }
 
-    /* 吹き出し */
     .speech-bubble {
       position: relative;
       background: white;
@@ -309,30 +326,6 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.12);
       margin: 20px 0;
       border: 3px solid var(--berry);
-    }
-
-    .speech-bubble::before {
-      content: "";
-      position: absolute;
-      bottom: -20px;
-      left: 30px;
-      width: 0;
-      height: 0;
-      border-left: 15px solid transparent;
-      border-right: 15px solid transparent;
-      border-top: 20px solid var(--berry);
-    }
-
-    .speech-bubble::after {
-      content: "";
-      position: absolute;
-      bottom: -14px;
-      left: 33px;
-      width: 0;
-      height: 0;
-      border-left: 12px solid transparent;
-      border-right: 12px solid transparent;
-      border-top: 17px solid white;
     }
 
     .speech-bubble h3 {
@@ -347,7 +340,44 @@
       line-height: 1.7;
     }
 
-    /* チェックリスト */
+    .facility-section {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      margin: 20px 0;
+    }
+
+    .facility-section h3 {
+      font-size: 22px;
+      color: var(--berry);
+      margin-bottom: 12px;
+      border-bottom: 3px solid var(--berry);
+      padding-bottom: 8px;
+    }
+
+    .facility-section p {
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.7;
+      margin: 10px 0;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .photo-grid img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
     .checklist {
       background: white;
       padding: 25px;
@@ -394,75 +424,6 @@
       font-size: 16px;
     }
 
-    /* ディスりボックス */
-    .roast-box {
-      background: linear-gradient(135deg, #fff3e0, #ffe0e0);
-      border: 3px dashed var(--berry);
-      border-radius: 16px;
-      padding: 20px;
-      margin: 25px 0;
-      position: relative;
-    }
-
-    .roast-box::before {
-      content: "⚠️";
-      position: absolute;
-      top: -18px;
-      left: 20px;
-      background: white;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 24px;
-    }
-
-    .roast-box h3 {
-      font-size: 20px;
-      color: var(--berry);
-      margin-bottom: 12px;
-      margin-top: 10px;
-    }
-
-    .roast-box p {
-      font-size: 15px;
-      color: var(--ink-soft);
-      line-height: 1.7;
-      margin: 8px 0;
-    }
-
-    .roast-box strong {
-      color: var(--berry);
-      font-weight: 900;
-    }
-
-    /* 写真コラージュ */
-    .photo-collage {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      grid-auto-rows: 100px;
-      gap: 12px;
-      margin: 25px 0;
-    }
-
-    .photo-collage .item {
-      background: white;
-      padding: 8px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      overflow: hidden;
-    }
-
-    .photo-collage .item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .photo-collage .wide { grid-column: span 2; }
-    .photo-collage .tall { grid-row: span 2; }
-    .photo-collage .big { grid-column: span 2; grid-row: span 2; }
-
-    /* フッター */
     .footer {
       margin-top: 30px;
       padding-top: 15px;
@@ -472,7 +433,6 @@
       color: var(--ink-soft);
     }
 
-    /* プリント用 */
     @page { size: A4; margin: 0; }
     @media print {
       body { background: white; }
@@ -482,7 +442,7 @@
 </head>
 <body>
 
-  <!-- ページ1: 表紙＆ヒーロー -->
+  <!-- ページ1: ヒーロー -->
   <div class="page">
     <div class="bg-deco"></div>
     <div class="content">
@@ -492,54 +452,55 @@
         <div class="badges">
           <span class="sticker">🚗 浜町発</span>
           <span class="sticker pink">🍓 いちご無限</span>
-          <span class="sticker mint">🏕️ ログキャビン泊</span>
-          <span class="sticker">🔥 BBQ持込</span>
+          <span class="sticker mint">🏕️ ログキャビン</span>
+          <span class="sticker">🔥 焚き火BBQ</span>
         </div>
       </section>
 
-      <!-- 写真カオス配置 -->
       <div class="photo-chaos">
-        <div class="photo-item label-pink" style="width: 240px; height: 180px; top: 10px; left: 20px; transform: rotate(-5deg);">
-          <img src="./assets/images/optimized/hero_strawberry.jpg" alt="いちご">
-          <span class="label">🍓 いちご腹パン</span>
+        <div class="photo-item label-pink" style="width: 220px; height: 160px; top: 10px; left: 20px; transform: rotate(-5deg);">
+          <img src="./assets/images/optimized/mashiko_ichigo_1.jpg" alt="いちご">
+          <span class="label">🍓 益子でいちご</span>
         </div>
-        <div class="photo-item label-mint" style="width: 200px; height: 160px; top: 20px; right: 30px; transform: rotate(8deg);">
-          <img src="./assets/images/optimized/log_cabin.jpg" alt="ログキャビン">
-          <span class="label">🏕️ 6畳で4人w</span>
+        <div class="photo-item label-mint" style="width: 200px; height: 150px; top: 20px; right: 30px; transform: rotate(8deg);">
+          <img src="./assets/images/optimized/motegi_logcabin_1.jpg" alt="ログキャビン">
+          <span class="label">🏕️ 6畳の現実</span>
         </div>
-        <div class="photo-item label-sun" style="width: 220px; height: 170px; top: 200px; left: 40px; transform: rotate(3deg);">
-          <img src="./assets/images/optimized/strawberry_farm.jpg" alt="農園">
-          <span class="label">🌱 農園テンション</span>
+        <div class="photo-item label-sun" style="width: 210px; height: 155px; top: 180px; left: 40px; transform: rotate(3deg);">
+          <img src="./assets/images/optimized/motegi_park_1.jpg" alt="パーク">
+          <span class="label">🎪 ガキ放電</span>
         </div>
-        <div class="photo-item" style="width: 180px; height: 140px; top: 210px; right: 50px; transform: rotate(-6deg);">
+        <div class="photo-item" style="width: 180px; height: 130px; top: 190px; right: 50px; transform: rotate(-6deg);">
           <img src="./assets/images/optimized/campfire.jpg" alt="焚き火">
           <span class="label">🔥 焚き火で優勝</span>
         </div>
-        <div class="photo-item label-pink" style="width: 200px; height: 150px; top: 360px; left: 260px; transform: rotate(4deg);">
-          <img src="./assets/images/optimized/bbq.jpg" alt="BBQ">
-          <span class="label">🍖 肉焼き係爆死</span>
-        </div>
-        <div class="photo-item label-mint" style="width: 190px; height: 145px; bottom: 20px; right: 80px; transform: rotate(-4deg);">
-          <img src="./assets/images/optimized/onsen.jpg" alt="温泉">
+        <div class="photo-item label-pink" style="width: 190px; height: 140px; bottom: 10px; left: 260px; transform: rotate(4deg);">
+          <img src="./assets/images/optimized/nozomi_bath_2.jpg" alt="温泉">
           <span class="label">♨️ のぞみの湯</span>
         </div>
       </div>
 
       <div class="speech-bubble">
-        <h3>🎯 旅の合言葉</h3>
-        <p><strong>✓</strong> チェックイン18:00締切。遅刻は詰み。<br>
-        <strong>✓</strong> 昼飯は不要。いちごで胃袋ロック済み。<br>
-        <strong>✓</strong> 薪1束は少なすぎ草。追加1-2束が正義。<br>
-        <strong>✓</strong> 2/13は15:00出発厳守。19:00浜町着の勝ち筋。</p>
+        <h3>📋 プラン詳細</h3>
+        <p><strong>【キャンプ／素泊まり】お日にち限定 ポップコーンづくり＆焚き火体験！夜は持ち込みBBQ！</strong><br>
+        ログキャビン9㎡に大人2＋ガキ2で寝る。風呂なし。BBQは全部自分で持ってく。ポップコーン作って焚き火して終わり。これで旅行とか言ってええんか？まあ行くけどな。</p>
+      </div>
+
+      <div class="speech-bubble" style="border-color: var(--mint);">
+        <h3>🎯 成功の鍵</h3>
+        <p><strong>✓</strong> チェックイン18:00締切。遅刻したら詰む。<br>
+        <strong>✓</strong> いちご食った後に昼飯とか無理。水分だけ補給しとけ。<br>
+        <strong>✓</strong> 薪1束じゃ足りん。追加で買ってけ。<br>
+        <strong>✓</strong> 2/13は15:00出発。渋滞ガチャに負けるな。</p>
       </div>
 
       <div class="footer">
-        🏃‍♂️ 大人2 + ガキ2（添い寝） | 素泊まりBBQ持込プラン | 入場・駐車無料（宿泊特典）
+        🏃‍♂️ 大人2 + ガキ2（添い寝） | 宿泊者特典：入場・駐車無料
       </div>
     </div>
   </div>
 
-  <!-- ページ2: タイムライン＆写真 -->
+  <!-- ページ2: タイムライン -->
   <div class="page">
     <div class="bg-deco"></div>
     <div class="content">
@@ -547,166 +508,169 @@
         <h2>⏰ 2日間タイムライン</h2>
 
         <div class="day-section">
-          <div class="day-title">📅 2/12(木) いちご狩り → チェックイン → BBQ</div>
-          <div class="time-row">
+          <div class="day-title">📅 2/12(木) いちご → チェックイン → BBQ</div>
+          <div class="time-row-with-photo">
             <div class="time">09:00</div>
-            <div class="activity"><strong>浜町 出発</strong><br>朝の機嫌はガチャ。おやつでバフ入れとけ。</div>
+            <div class="activity"><strong>浜町 出発</strong><br>朝のガキの機嫌はガチャ。おやつでバフかけとけ。</div>
+            <img src="./assets/images/optimized/vitz.jpg" alt="ヴィッツ" class="photo-thumbnail">
           </div>
           <div class="time-row">
             <div class="time">11:30</div>
-            <div class="activity"><strong>真岡 到着</strong><br>渋滞引いても焦るな。焦るけどな。</div>
+            <div class="activity"><strong>益子 到着</strong><br>高速で2時間半。渋滞引いたら諦めろ。</div>
           </div>
-          <div class="time-row">
+          <div class="time-row-with-photo">
             <div class="time">12:00<br>-12:45</div>
-            <div class="activity"><strong>🍓 Twins Farm いちご狩り（45分）</strong><br>いちご8品種食べ放題で腹パン確定。昼飯？知らんな。<br>料金：大人2,900円×2 ＋ ガキ分（年齢次第）</div>
+            <div class="activity"><strong>🍓 益子観光いちご団地（45分）</strong><br>100棟のハウスで8品種食い放題。とちおとめ、とちあいか全部いける。昼飯？そんなもん要らん。</div>
+            <img src="./assets/images/optimized/mashiko_ichigo_2.jpg" alt="いちご" class="photo-thumbnail">
           </div>
-          <div class="time-row">
+          <div class="time-row-with-photo">
             <div class="time">13:15<br>-14:30</div>
-            <div class="activity"><strong>道の駅もてぎ 寄り道</strong><br>未知の液でHP回復。SL遊具でガキ放電、親は深呼吸。</div>
+            <div class="activity"><strong>道の駅もてぎ 寄り道</strong><br>道の駅で地元ドリンク買ってHP回復。SL遊具でガキ放電させとけ。長居は禁止。</div>
+            <img src="./assets/images/optimized/michinoeki_sl.jpg" alt="道の駅SL" class="photo-thumbnail">
           </div>
-          <div class="time-row">
+          <div class="time-row-with-photo">
             <div class="time">15:30<br>-16:00</div>
-            <div class="activity"><strong>🏕️ もてぎ チェックイン（北ゲート）</strong><br>15:00-18:00の間に必須。18:00超えたら詰み確定。<br>ログキャビン(log)：9㎡・定員4名・エアコン完備</div>
+            <div class="activity"><strong>🏕️ もてぎ チェックイン（北ゲート）</strong><br>15:00-18:00の間に必須。18:00超えたらアウト。ログキャビン9㎡・定員4名・風呂なし確定。</div>
+            <img src="./assets/images/optimized/motegi_logcabin_1.jpg" alt="ログキャビン" class="photo-thumbnail">
           </div>
-          <div class="time-row">
+          <div class="time-row-with-photo">
             <div class="time">夜</div>
-            <div class="activity"><strong>🍖 持込BBQ → ♨️ のぞみの湯 → 🔥 焚き火</strong><br>肉焼いて湯浸かって火囲んで優勝。23:00消灯厳守。</div>
+            <div class="activity"><strong>🍖 持込BBQ → ♨️ のぞみの湯 → 🔥 焚き火＆ポップコーン</strong><br>肉焼いて湯浸かって火囲んで終わり。23:00消灯厳守やぞ。</div>
+            <img src="./assets/images/optimized/campfire.jpg" alt="焚き火" class="photo-thumbnail">
           </div>
         </div>
 
         <div class="day-section">
-          <div class="day-title">📅 2/13(金) もてぎで遊ぶ → 帰宅</div>
-          <div class="time-row">
+          <div class="day-title">📅 2/13(金) パーク → 帰宅 → ラーメン</div>
+          <div class="time-row-with-photo">
             <div class="time">06:00</div>
-            <div class="activity"><strong>朝風呂</strong><br>のぞみの湯 6:00-9:00。目覚ましは湯気。</div>
+            <div class="activity"><strong>朝風呂</strong><br>のぞみの湯 6:00-9:00。起きれたら行け。</div>
+            <img src="./assets/images/optimized/nozomi_bath_2.jpg" alt="朝風呂" class="photo-thumbnail">
           </div>
           <div class="time-row">
             <div class="time">10:00</div>
-            <div class="activity"><strong>チェックアウト ＆ パーク開園</strong><br>荷物は預けて身軽に。ガキ解放の儀スタート。</div>
+            <div class="activity"><strong>チェックアウト ＆ パーク開園</strong><br>荷物預けて身軽にしてからガキ解放。</div>
           </div>
-          <div class="time-row">
+          <div class="time-row-with-photo">
             <div class="time">10:00<br>-15:00</div>
-            <div class="activity"><strong>🎢 パークで遊びまくる</strong><br>営業10:00-16:00（冬は早仕舞い）。体力ゼロまで削れ。<br>※パスポートは別購入の可能性あり（プラン確認しろ）</div>
+            <div class="activity"><strong>🎢 もてぎパークで遊ぶ</strong><br>営業10:00-16:00（冬は早仕舞い）。カート、アスレチック、ジップライン全部やれ。</div>
+            <img src="./assets/images/optimized/motegi_park_2.jpg" alt="パーク" class="photo-thumbnail">
           </div>
           <div class="time-row">
             <div class="time">15:00</div>
-            <div class="activity"><strong>🚗 もてぎ 出発</strong><br>19:00浜町着の勝ち筋。16:00まで粘るのは渋滞ガチャで詰む。</div>
+            <div class="activity"><strong>🚗 もてぎ 出発</strong><br>19:00浜町着の勝ち筋。16:00まで粘ったら渋滞ガチャで詰む。</div>
           </div>
           <div class="time-row">
-            <div class="time">18:00<br>-19:00</div>
-            <div class="activity"><strong>浜町 到着</strong><br>無事帰還。家でバタンキュー。お疲れ様でした。</div>
+            <div class="time">18:30</div>
+            <div class="activity"><strong>浜町 到着</strong><br>ガキ＋ママをここで降ろす。パパは続行。</div>
+          </div>
+          <div class="time-row">
+            <div class="time">20:00</div>
+            <div class="activity"><strong>🚗 レンタカー返却</strong><br>20:00までに返せ。遅延料金とか払いたくないやろ。</div>
+          </div>
+          <div class="time-row-with-photo">
+            <div class="time">20:15</div>
+            <div class="activity"><strong>🍜 豚山ラーメン購入 → 帰宅</strong><br>パパは豚山ラーメン買って帰る。これが真の勝利。</div>
+            <img src="./assets/images/optimized/butayama_ramen_1.webp" alt="豚山ラーメン" class="photo-thumbnail">
           </div>
         </div>
       </div>
 
-      <div class="gallery">
-        <div class="gallery-item">
-          <img src="./assets/images/optimized/strawberry_picking.jpg" alt="いちご狩り">
-          <div class="caption">🍓 農園で無限化</div>
-        </div>
-        <div class="gallery-item">
-          <img src="./assets/images/optimized/michinoeki.jpg" alt="道の駅">
-          <div class="caption">🏪 未知の液</div>
-        </div>
-        <div class="gallery-item">
-          <img src="./assets/images/optimized/cabin_interior.jpg" alt="キャビン内装">
-          <div class="caption">🛏️ 6畳4人寝w</div>
-        </div>
-        <div class="gallery-item">
-          <img src="./assets/images/optimized/playground.jpg" alt="遊具">
-          <div class="caption">🎪 ガキ放電</div>
-        </div>
-      </div>
-
       <div class="footer">
-        💰 費用目安（往復）：高速4,400円 + ガソリン3,600円 + いちご5,800円〜 = 約13,800円〜（宿泊・食材別）
+        🌟 パーク営業 10:00-16:00（冬季短縮）| 南ゲート 20:00-4:30閉鎖
       </div>
     </div>
   </div>
 
-  <!-- ページ3: 写真ギャラリー＆ディスり -->
+  <!-- ページ3: 施設詳細 -->
   <div class="page">
     <div class="bg-deco"></div>
     <div class="content">
-      <h2 style="font-size: 32px; color: var(--berry); margin-bottom: 20px; text-align: center;">📸 写真で見る2日間</h2>
+      <h2 style="font-size: 32px; color: var(--berry); margin-bottom: 20px; text-align: center;">📍 施設ガイド</h2>
 
-      <div class="photo-collage">
-        <div class="item big">
-          <img src="./assets/images/optimized/racetrack.jpg" alt="レーストラック">
+      <div class="facility-section">
+        <h3>🍓 益子観光いちご団地</h3>
+        <p>北関東最大級、100棟のハウスで8品種食い放題45分。とちおとめ、とちあいか、スカイベリー全部試せる。甘いもん好きなガキには天国、親には地獄（甘いもん苦手勢）。でもまあ行くしかないな。</p>
+        <div class="photo-grid">
+          <img src="./assets/images/optimized/mashiko_ichigo_1.jpg" alt="益子いちご1">
+          <img src="./assets/images/optimized/mashiko_ichigo_2.jpg" alt="益子いちご2">
+          <img src="./assets/images/optimized/mashiko_ichigo_3.jpg" alt="益子いちご3">
+          <img src="./assets/images/optimized/mashiko_ichigo_4.jpg" alt="益子いちご4">
+          <img src="./assets/images/optimized/mashiko_ichigo_5.jpg" alt="益子いちご5">
+          <img src="./assets/images/optimized/mashiko_ichigo_6.jpg" alt="益子いちご6">
         </div>
-        <div class="item tall">
-          <img src="./assets/images/optimized/attraction.jpg" alt="アトラクション">
+      </div>
+
+      <div class="facility-section">
+        <h3>🏪 道の駅もてぎ</h3>
+        <p>いちご食った後の休憩ポイント。SL遊具でガキ放電、親は深呼吸。土日祝の12:00と14:30にSLが通過するから写真撮れるで。ゆず塩ラーメンと手作りアイスが名物。道の駅で地元ドリンク買ってHP回復したら即出発。長居は時間の無駄やぞ。</p>
+        <div class="photo-grid">
+          <img src="./assets/images/optimized/michinoeki_sl.jpg" alt="SL遊具">
+          <img src="./assets/images/optimized/michinoeki_ice.jpg" alt="手作りアイス">
+          <img src="./assets/images/optimized/michinoeki_food.jpg" alt="ゆず塩ラーメン">
+          <img src="./assets/images/optimized/motegi_michinoeki_1.jpg" alt="道の駅外観">
+          <img src="./assets/images/optimized/motegi_michinoeki_2.jpg" alt="道の駅施設">
+          <img src="./assets/images/optimized/michinoeki_park.jpg" alt="公園">
         </div>
-        <div class="item">
+      </div>
+
+      <div class="facility-section">
+        <h3>🏕️ ログキャビン（森と星空のキャンプヴィレッジ）</h3>
+        <p><strong>9㎡＝約6畳に大人2＋ガキ2で寝る狂気。</strong>2段ベッドは上段1.8m。寝相悪いガキは落下して即死確定。布団の取り合いでバトル必至。風呂なし確定でのぞみの湯まで徒歩3-5分。冬の夜22時に外歩くとか修行か？防寒ガチらんと凍死するぞ。でもまあキャンプってそういうもんやろ（諦め）。</p>
+        <div class="photo-grid">
+          <img src="./assets/images/optimized/motegi_logcabin_1.jpg" alt="ログキャビン外観">
+          <img src="./assets/images/optimized/motegi_logcabin_2.jpg" alt="ログキャビン内装">
+          <img src="./assets/images/optimized/motegi_logcabin_3.jpg" alt="ログキャビン設備">
+          <img src="./assets/images/optimized/campfire.jpg" alt="焚き火">
+          <img src="./assets/images/optimized/bbq.jpg" alt="BBQ">
           <img src="./assets/images/optimized/forest.jpg" alt="森">
         </div>
-        <div class="item wide">
-          <img src="./assets/images/optimized/roadtrip.jpg" alt="ロードトリップ">
-        </div>
-        <div class="item">
-          <img src="./assets/images/optimized/strawberry_farm.jpg" alt="いちご農園">
-        </div>
-        <div class="item">
-          <img src="./assets/images/optimized/hero_strawberry.jpg" alt="いちご">
-        </div>
-        <div class="item">
-          <img src="./assets/images/optimized/log_cabin.jpg" alt="ログキャビン">
-        </div>
-        <div class="item wide">
-          <img src="./assets/images/optimized/campfire.jpg" alt="焚き火">
-        </div>
-        <div class="item">
-          <img src="./assets/images/optimized/bbq.jpg" alt="BBQ">
-        </div>
-        <div class="item">
-          <img src="./assets/images/optimized/onsen.jpg" alt="温泉">
-        </div>
-        <div class="item tall">
-          <img src="./assets/images/optimized/playground.jpg" alt="遊び場">
-        </div>
-        <div class="item">
-          <img src="./assets/images/optimized/michinoeki.jpg" alt="道の駅">
+      </div>
+
+      <div class="facility-section">
+        <h3>🎢 もてぎパーク（ハローウッズ）</h3>
+        <p>カート、アスレチック、ジップライン、森の工作体験。ガキが喜ぶやつ全部ある。営業10:00-16:00で冬は早仕舞い。体力ゼロまで遊ばせて車で即寝させるのが正解。</p>
+        <div class="photo-grid">
+          <img src="./assets/images/optimized/motegi_park_1.jpg" alt="パーク1">
+          <img src="./assets/images/optimized/motegi_park_2.jpg" alt="パーク2">
+          <img src="./assets/images/optimized/motegi_park_4.jpg" alt="パーク3">
+          <img src="./assets/images/optimized/motegi_attraction_carbike2.jpg" alt="カート">
+          <img src="./assets/images/optimized/motegi_attraction_carbike3.jpg" alt="乗り物">
+          <img src="./assets/images/optimized/motegi_car_attraction.jpg" alt="カー体験">
+          <img src="./assets/images/optimized/motegi_workshop.jpg" alt="工作体験">
+          <img src="./assets/images/optimized/motegi_hotel_family.jpg" alt="ファミリー遊具">
+          <img src="./assets/images/optimized/motegi_hotel_activity.jpg" alt="アクティビティ">
         </div>
       </div>
 
-      <div class="roast-box">
-        <h3>🏕️ ログキャビンの現実（ディスり注意）</h3>
-        <p><strong>6畳で4人寝wwww</strong><br>
-        ログキャビン(log)は9㎡＝約6畳。大人2＋ガキ2で埋まる。2段ベッドで寝るから寝相悪いやつは落下注意な。</p>
-        <p><strong>風呂なし温泉歩き草</strong><br>
-        キャビン内に風呂ナシ確定。のぞみの湯（大浴場）か温水シャワー使う。冬の夜に外歩くの覚悟しとけ。防寒ガチれ。</p>
-        <p><strong>チェックイン18:00締切ガチ</strong><br>
-        15:00-18:00の間にチェックインせんと詰む。遅刻したらBBQ食材届くタイミングとか全部バグる。舐めるな。</p>
-        <p><strong>薪1束は心許ない</strong><br>
-        プランに付いてくる薪は1束だけ。2月の夜は普通に冷える。追加1-2束買ってこい。ホムセンで700-800円や。</p>
-      </div>
-
-      <div class="speech-bubble" style="border-color: var(--mint);">
-        <h3>♨️ のぞみの湯 情報</h3>
-        <p><strong>営業時間：</strong>15:00-22:00（最終入館21:30）/ 翌朝 6:00-9:00<br>
-        <strong>宿泊者：</strong>チェックイン日15:00〜チェックアウト日19:00まで無料<br>
-        <strong>設備：</strong>大浴場（男女別）・露天風呂・シルキーバス・ジェットバス<br>
-        <strong>距離：</strong>キャビンから徒歩3-5分（冬は防寒必須）</p>
+      <div class="facility-section">
+        <h3>♨️ のぞみの湯</h3>
+        <p>大浴場・露天風呂・シルキーバス完備。営業15:00-22:00、翌朝6:00-9:00。宿泊者は無料。キャビンから徒歩3-5分。冬の夜は防寒必須やぞ。朝風呂は目覚ましに最適。</p>
+        <div class="photo-grid">
+          <img src="./assets/images/optimized/nozomi_bath_1.jpg" alt="大浴場">
+          <img src="./assets/images/optimized/nozomi_bath_2.jpg" alt="露天風呂">
+          <img src="./assets/images/optimized/nozomi_bath_3.jpg" alt="風呂施設">
+        </div>
       </div>
 
       <div class="footer">
-        🌟 パーク営業 10:00-16:00（冬季短縮）| 南ゲート 20:00-4:30閉鎖（夜は北ゲート）
+        💡 全施設の写真は現地公式サイトより
       </div>
     </div>
   </div>
 
-  <!-- ページ4: 準備リスト＆まとめ -->
+  <!-- ページ4: 準備リスト＆豚山 -->
   <div class="page">
     <div class="bg-deco"></div>
     <div class="content">
-      <h2 style="font-size: 32px; color: var(--mint); margin-bottom: 20px; text-align: center;">✅ 前日までに済ませとけリスト</h2>
+      <h2 style="font-size: 32px; color: var(--mint); margin-bottom: 20px; text-align: center;">✅ 前日までにやっとけリスト</h2>
 
       <div class="checklist">
         <h2>📋 予約・手配</h2>
         <ul>
-          <li>Twins Farm 12:00枠の予約メール/QR保存（スマホに入れとけ）</li>
-          <li>宿の予約票プリント or スマホ保存（ゲートで名前照合ある）</li>
-          <li>営業時間をLINEで家族共有（10:00-16:00、忘れて詰むな）</li>
+          <li>益子観光いちご団地 12:00枠の予約確認（スマホに入れとけ）</li>
+          <li>宿の予約票保存（ゲートで名前照合ある）</li>
+          <li>営業時間を家族共有（10:00-16:00、忘れるな）</li>
         </ul>
       </div>
 
@@ -714,7 +678,7 @@
         <h2>🍖 BBQ食材（素泊まり＝飯は自力）</h2>
         <ul>
           <li>肉（焼きやすいの多め：ウインナー/豚バラ/鶏もも）</li>
-          <li>野菜（カット済みが正義）＋ 焼きそばセット</li>
+          <li>野菜（カット済み）＋ 焼きそばセット</li>
           <li>ガキ用保険飯（パン/おにぎり/カップスープ）</li>
           <li>飲み物（夜と翌朝分まで。甘いもん後の水分も忘れるな）</li>
           <li>調味料・紙皿・箸・トング・アルミホイル</li>
@@ -722,11 +686,11 @@
       </div>
 
       <div class="checklist">
-        <h2>🔥 火まわり（これ忘れると終わる）</h2>
+        <h2>🔥 火まわり</h2>
         <ul>
-          <li>炭（BBQ燃料は基本自前。現地売店は在庫保証なし）</li>
+          <li>炭（BBQ用。プランに含まれてないから持参必須）</li>
           <li>着火道具：チャッカマン・軍手・トング</li>
-          <li>薪追加1-2束（プランの1束は心許ない。ホムセンで買え）</li>
+          <li>薪追加1-2束（プランで1束もらえるが足りん。ホムセンで追加購入推奨）</li>
         </ul>
       </div>
 
@@ -740,51 +704,48 @@
         </ul>
       </div>
 
-      <div class="roast-box" style="background: linear-gradient(135deg, #e6f7ff, #e6ffe6);">
+      <div class="speech-bubble" style="border-color: var(--sun); background: linear-gradient(135deg, #fff9e6, #ffe6f0);">
         <h3>🚨 当日の罠ポイント</h3>
-        <p><strong>いちご後の昼飯は不要</strong><br>
-        12:00-12:45でいちご食いまくるから、昼飯いらん。水分だけ買っとけ。甘いもん後に脱水なるぞ。</p>
-        <p><strong>道の駅もてぎは長居禁止</strong><br>
-        ガキ放電＆未知の液でサクッと回復したら即出発。16:00チェックイン目標や。</p>
-        <p><strong>消灯23:00厳守</strong><br>
-        焚き火ダラダラやるな。直火NG・キャビン内火気NG。焚き火台使え。</p>
-        <p><strong>2/13は15:00出発が勝ち筋</strong><br>
-        16:00まで粘ったら渋滞ガチャで19:00浜町着は運ゲー。15:00なら余裕。</p>
+        <p><strong>いちご後の昼飯は不要</strong> → 12:00-12:45でいちご食いまくるから昼飯いらん。水分だけ買っとけ。<br>
+        <strong>道の駅は長居禁止</strong> → ガキ放電＆道の駅でドリンク買ってサクッと回復したら即出発。16:00チェックイン目標。<br>
+        <strong>消灯23:00厳守</strong> → 焚き火ダラダラやるな。直火NG・キャビン内火気NG。焚き火台使え。<br>
+        <strong>2/13は15:00出発が勝ち筋</strong> → 16:00まで粘ったら渋滞ガチャで19:00浜町着は運ゲー。</p>
+      </div>
+
+      <div class="facility-section" style="background: linear-gradient(135deg, #ffe6e6, #fff9e6);">
+        <h3>🍜 豚山ラーメン（パパの勝利）</h3>
+        <p>レンタカー返却後、パパは豚山ラーメンを買って帰る。濃厚醤油スープに甘辛チャーシュー、野菜もりもり。2日間の疲れを癒す最終兵器や。これが真の勝利。</p>
+        <div class="gallery">
+          <div class="gallery-item">
+            <img src="./assets/images/optimized/butayama_ramen_1.webp" alt="豚山ラーメン1">
+            <div class="caption">🍜 豚山ラーメン</div>
+          </div>
+          <div class="gallery-item">
+            <img src="./assets/images/optimized/butayama_ramen_2.jpg" alt="豚山ラーメン2">
+            <div class="caption">🍜 濃厚スープ</div>
+          </div>
+          <div class="gallery-item">
+            <img src="./assets/images/optimized/butayama_ramen_3.jpg" alt="豚山ラーメン3">
+            <div class="caption">🍜 野菜もりもり</div>
+          </div>
+          <div class="gallery-item">
+            <img src="./assets/images/optimized/roadtrip.jpg" alt="ロードトリップ">
+            <div class="caption">🚗 完</div>
+          </div>
+        </div>
       </div>
 
       <div style="margin-top: 25px; background: white; padding: 20px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
-        <h3 style="font-size: 20px; color: var(--berry); margin-bottom: 12px;">🎯 まとめ：成功の3箇条</h3>
+        <h3 style="font-size: 20px; color: var(--berry); margin-bottom: 12px;">🎯 まとめ：生き残る3箇条</h3>
         <p style="font-size: 15px; line-height: 1.8; color: var(--ink-soft);">
         <strong style="color: var(--ink);">1. 早め行動</strong> → チェックイン18:00締切・15:00出発厳守<br>
-        <strong style="color: var(--ink);">2. 水分＆防寒ガチ</strong> → いちご後の水分・冬の夜の防寒<br>
+        <strong style="color: var(--ink);">2. 水分＆防寒</strong> → いちご後の水分・冬の夜の防寒<br>
         <strong style="color: var(--ink);">3. BBQ準備完璧</strong> → 炭・薪・食材は前日までに全部揃える
         </p>
       </div>
 
-      <div class="gallery" style="grid-template-columns: repeat(6, 1fr); margin-top: 25px;">
-        <div class="gallery-item" style="transform: rotate(-3deg);">
-          <img src="./assets/images/optimized/hero_strawberry.jpg" alt="いちご" style="height: 100px;">
-        </div>
-        <div class="gallery-item" style="transform: rotate(2deg);">
-          <img src="./assets/images/optimized/strawberry_picking.jpg" alt="いちご狩り" style="height: 100px;">
-        </div>
-        <div class="gallery-item" style="transform: rotate(-2deg);">
-          <img src="./assets/images/optimized/michinoeki.jpg" alt="道の駅" style="height: 100px;">
-        </div>
-        <div class="gallery-item" style="transform: rotate(3deg);">
-          <img src="./assets/images/optimized/log_cabin.jpg" alt="ログキャビン" style="height: 100px;">
-        </div>
-        <div class="gallery-item" style="transform: rotate(-2deg);">
-          <img src="./assets/images/optimized/campfire.jpg" alt="焚き火" style="height: 100px;">
-        </div>
-        <div class="gallery-item" style="transform: rotate(2deg);">
-          <img src="./assets/images/optimized/onsen.jpg" alt="温泉" style="height: 100px;">
-        </div>
-      </div>
-
-      <div class="footer" style="margin-top: 30px; font-size: 10px;">
-        <p style="margin-bottom: 8px;"><strong>Photo Credits:</strong> Wikimedia Commons (CC0 / CC BY-SA) - Alabama Extension, DimiTalen, Namuunbaigali.U, Tail furry, Benoît Prieur, Daderot, Basile Morin, Forest Service Northern Region, Syced, Photo by KUMAGAYA, SkyPixels, mypubliclands, Yiannis Theologos Michellis</p>
-        <p>🎉 楽しい2日間になりますように！ガキも大人もテンション爆上げで行ってこい！🔥</p>
+      <div class="footer" style="margin-top: 30px; font-size: 12px;">
+        <p>🎉 楽しい2日間になるといいな。ガキも大人も無事帰還を祈る。🔥</p>
       </div>
     </div>
   </div>
