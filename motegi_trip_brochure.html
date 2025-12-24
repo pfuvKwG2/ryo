@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>もてぎ2DAYS なんJ家族旅</title>
+  <link rel="stylesheet" href="./assets/fonts/fonts.css" />
+  <style>
+    :root {
+      --ink: #1d1a16;
+      --ink-soft: #4d4239;
+      --ink-quiet: #6b5e52;
+      --paper: #fffdf8;
+      --cream: #fef4df;
+      --berry: #ff4764;
+      --berry-deep: #d62f47;
+      --leaf: #34b37a;
+      --sun: #ffcc4d;
+      --sky: #7cc9ff;
+      --mint: #b6f1d6;
+      --lilac: #d7c7ff;
+      --peach: #ffc59b;
+      --sand: #fff1cf;
+      --blue-deep: #2e58ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: "Zen Maru Gothic", "Yu Gothic UI", "Meiryo", sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    h1, h2, h3 {
+      font-family: "Shippori Mincho B1", "Yu Mincho", "Hiragino Mincho ProN", serif;
+      margin: 0;
+      letter-spacing: 0.03em;
+    }
+
+    p { margin: 0; line-height: 1.65; }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 16mm 16mm 18mm;
+      background: var(--paper);
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+    }
+
+    .page:last-child { page-break-after: auto; }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: -20% -10% auto -10%;
+      height: 220mm;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(255, 204, 77, 0.35), transparent 55%),
+        radial-gradient(circle at 85% 10%, rgba(124, 201, 255, 0.3), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(255, 71, 100, 0.25), transparent 60%),
+        radial-gradient(circle at 20% 80%, rgba(182, 241, 214, 0.3), transparent 60%);
+      z-index: 0;
+    }
+
+    .page-inner { position: relative; z-index: 1; }
+
+    .confetti {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 30%, rgba(255, 71, 100, 0.2) 0 6px, transparent 7px),
+        radial-gradient(circle at 30% 80%, rgba(124, 201, 255, 0.25) 0 7px, transparent 8px),
+        radial-gradient(circle at 70% 25%, rgba(255, 204, 77, 0.25) 0 5px, transparent 6px),
+        radial-gradient(circle at 85% 75%, rgba(182, 241, 214, 0.3) 0 6px, transparent 7px);
+      opacity: 0.8;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--sand);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink-soft);
+      letter-spacing: 0.05em;
+    }
+
+    .hero { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 18px; }
+
+    .hero h1 { font-size: 40px; margin: 14px 0 8px; }
+
+    .hero .sub { font-size: 15px; color: var(--ink-soft); margin-bottom: 14px; }
+
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .badge {
+      border: 2px solid #ffd88a;
+      background: #fff1b5;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      font-weight: 700;
+    }
+
+    .hero-banner {
+      margin-top: 10px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 2px solid #ffd3da;
+      box-shadow: 0 14px 30px rgba(32, 26, 20, 0.1);
+      height: 160px;
+      position: relative;
+    }
+
+    .hero-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .banner-text {
+      position: absolute;
+      right: 14px;
+      bottom: 12px;
+      background: rgba(255, 71, 100, 0.9);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 95px;
+      gap: 10px;
+    }
+
+    .photo-card {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid #ffe3c7;
+      position: relative;
+      box-shadow: 0 10px 20px rgba(32, 26, 20, 0.08);
+      background: #fff;
+    }
+
+    .photo-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .photo-card.wide { grid-column: span 2; }
+    .photo-card.tall { grid-row: span 2; }
+
+    .photo-caption {
+      position: absolute;
+      left: 8px;
+      bottom: 8px;
+      background: rgba(32, 26, 20, 0.65);
+      color: #fff;
+      padding: 4px 8px;
+      font-size: 11px;
+      border-radius: 999px;
+    }
+
+    .callout {
+      margin-top: 14px;
+      background: #e8f9ff;
+      border: 2px dashed #7cc9ff;
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-size: 12.5px;
+      color: var(--ink-soft);
+      display: grid;
+      gap: 6px;
+    }
+
+    .callout strong { color: var(--ink); }
+
+    .route-strip {
+      margin-top: 14px;
+      background: #fff8d7;
+      border-radius: 18px;
+      padding: 14px;
+      border: 2px solid #ffe4a6;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .route-strip h2 { font-size: 18px; margin-bottom: 6px; }
+
+    .route-note { font-size: 12px; color: var(--ink-quiet); }
+
+    .page-itinerary::before {
+      background:
+        radial-gradient(circle at 85% 15%, rgba(255, 71, 100, 0.22), transparent 55%),
+        radial-gradient(circle at 20% 80%, rgba(52, 179, 122, 0.2), transparent 60%),
+        radial-gradient(circle at 60% 50%, rgba(255, 204, 77, 0.22), transparent 55%);
+    }
+
+    .itinerary-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 18px; }
+
+    .timeline {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 16px;
+      border: 2px solid #ffe4b7;
+      box-shadow: 0 10px 20px rgba(32, 26, 20, 0.05);
+      display: grid;
+      gap: 12px;
+    }
+
+    .timeline h2 { font-size: 20px; }
+
+    .day-block {
+      background: #fffaf2;
+      border-radius: 14px;
+      padding: 12px;
+      border: 2px solid #ffe3c7;
+      display: grid;
+      gap: 8px;
+    }
+
+    .day-title { font-weight: 700; color: var(--ink-soft); font-size: 14px; }
+
+    .time-item {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--ink-quiet);
+    }
+
+    .time-item strong { color: var(--ink); font-weight: 700; }
+
+    .spot-grid { display: grid; gap: 10px; }
+
+    .spot-card {
+      display: grid;
+      grid-template-columns: 78px 1fr;
+      gap: 10px;
+      align-items: center;
+      background: #ffffff;
+      border: 2px solid #dfe8ff;
+      border-radius: 16px;
+      padding: 8px;
+      box-shadow: 0 8px 16px rgba(32, 26, 20, 0.05);
+    }
+
+    .spot-card img { width: 78px; height: 78px; border-radius: 12px; object-fit: cover; }
+
+    .spot-card h3 { font-size: 14px; margin-bottom: 4px; }
+
+    .spot-card p { font-size: 12px; color: var(--ink-quiet); }
+
+    .page-gallery::before {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 204, 77, 0.22), transparent 60%),
+        radial-gradient(circle at 80% 30%, rgba(124, 201, 255, 0.22), transparent 60%),
+        radial-gradient(circle at 60% 80%, rgba(182, 241, 214, 0.25), transparent 60%);
+    }
+
+    .gallery-title { font-size: 22px; margin-bottom: 10px; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 90px;
+      gap: 10px;
+    }
+
+    .gallery-grid .photo-card { border-color: #d9f1ff; }
+
+    .gallery-grid .photo-card.big { grid-column: span 2; grid-row: span 2; }
+
+    .section-box {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: #fff7fb;
+      border: 2px solid #ffd0e1;
+    }
+
+    .section-box h3 { font-size: 16px; margin-bottom: 6px; }
+
+    .section-box p { font-size: 12.5px; color: var(--ink-quiet); }
+
+    .stay-grid {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-auto-rows: 80px;
+      gap: 8px;
+    }
+
+    .stay-grid .photo-card { border-color: #ffe4a6; }
+
+    .page-prep::before {
+      background:
+        radial-gradient(circle at 15% 15%, rgba(124, 201, 255, 0.25), transparent 55%),
+        radial-gradient(circle at 80% 30%, rgba(255, 71, 100, 0.2), transparent 60%),
+        radial-gradient(circle at 50% 80%, rgba(255, 204, 77, 0.2), transparent 60%);
+    }
+
+    .banner {
+      height: 150px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 2px solid #ffd6a6;
+      box-shadow: 0 12px 26px rgba(32, 26, 20, 0.08);
+    }
+
+    .banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .prep-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 18px; margin-top: 16px; }
+
+    .checklist {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 16px;
+      border: 2px solid #ffe4b7;
+      display: grid;
+      gap: 12px;
+    }
+
+    .checklist h2 { font-size: 20px; }
+
+    .checklist ul { margin: 0; padding-left: 18px; color: var(--ink-quiet); font-size: 12.5px; line-height: 1.7; }
+
+    .rules {
+      background: #fff8ed;
+      border-radius: 18px;
+      padding: 16px;
+      border: 2px solid #ffd79a;
+      display: grid;
+      gap: 10px;
+      font-size: 12.5px;
+      color: var(--ink-quiet);
+    }
+
+    .rules h2 { font-size: 18px; margin: 0; color: var(--ink); }
+
+    .rule { padding: 8px 10px; background: #fffdf8; border-radius: 12px; border: 1px solid #f0e1cb; }
+
+    .mini-photos {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+
+    .mini-photos img { width: 100%; height: 70px; object-fit: cover; border-radius: 12px; border: 2px solid #ffe4a6; }
+
+    .credits {
+      margin-top: 10px;
+      font-size: 9px;
+      color: var(--ink-quiet);
+      line-height: 1.4;
+      max-height: 100px;
+      overflow: hidden;
+    }
+
+    .credits ul { margin: 0; padding-left: 14px; }
+
+    .footer {
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--ink-quiet);
+    }
+
+    .note {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--ink-quiet);
+    }
+
+    @page { size: A4; margin: 0; }
+
+    @media print {
+      body { background: var(--paper); }
+      .page { margin: 0; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="confetti"></div>
+    <div class="page-inner">
+      <section class="hero">
+        <div>
+          <div class="tag">2026/2/12(木) - 2/13(金) / 車旅 / 浜町発</div>
+          <h1>もてぎ2DAYS なんJ家族旅</h1>
+          <p class="sub">浜町 → 真岡いちご → 道の駅もてぎ → 森と星空のキャンプヴィレッジ → もてぎパーク → 浜町</p>
+          <div class="badges">
+            <div class="badge">大人2 + ガキ2</div>
+            <div class="badge">Twins Farm 12:00枠</div>
+            <div class="badge">素泊まりBBQ持込</div>
+            <div class="badge">19:00浜町帰還</div>
+          </div>
+          <div class="hero-banner">
+            <img src="./assets/images/optimized/hero_strawberry.jpg" alt="strawberry hero" />
+            <span class="banner-text">いちごで腹パン確定</span>
+          </div>
+          <div class="callout">
+            <strong>旅の合言葉</strong>
+            <div>チェックイン18:00締切。遅刻は詰み。</div>
+            <div>昼飯は不要。いちごで胃袋ロック。</div>
+            <div>薪は1束じゃ足りん。追加1-2束が正義。</div>
+          </div>
+        </div>
+        <div class="photo-grid">
+          <div class="photo-card tall">
+            <img src="./assets/images/optimized/strawberry_farm.jpg" alt="strawberry farm" />
+            <span class="photo-caption">農園でガキ解放</span>
+          </div>
+          <div class="photo-card">
+            <img src="./assets/images/optimized/michinoeki.jpg" alt="michinoeki" />
+            <span class="photo-caption">未知の液</span>
+          </div>
+          <div class="photo-card">
+            <img src="./assets/images/optimized/attraction.jpg" alt="attraction" />
+            <span class="photo-caption">アトラクション気分</span>
+          </div>
+          <div class="photo-card">
+            <img src="./assets/images/optimized/log_cabin.jpg" alt="log cabin" />
+            <span class="photo-caption">ログキャビン</span>
+          </div>
+          <div class="photo-card">
+            <img src="./assets/images/optimized/onsen.jpg" alt="onsen" />
+            <span class="photo-caption">のぞみの湯</span>
+          </div>
+          <div class="photo-card">
+            <img src="./assets/images/optimized/playground.jpg" alt="playground" />
+            <span class="photo-caption">遊具で放電</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="route-strip">
+        <div>
+          <h2>ざっくりルート</h2>
+          <p class="route-note">浜町 → 真岡（Twins Farm）→ 道の駅もてぎ → もてぎ（キャンプヴィレッジ）</p>
+          <p class="route-note">宿泊者は入場・駐車無料。北ゲート推奨。</p>
+        </div>
+        <div class="photo-card" style="height:120px">
+          <img src="./assets/images/optimized/roadtrip.jpg" alt="road trip" />
+          <span class="photo-caption">高速で一直線</span>
+        </div>
+      </section>
+
+      <div class="footer">
+        <span>プラン：キャンプ/素泊まり ポップコーン&焚き火体験 + 持込BBQ</span>
+        <span>写真はイメージ</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="page page-itinerary">
+    <div class="page-inner">
+      <section class="itinerary-grid">
+        <div class="timeline">
+          <h2>2日間タイムライン</h2>
+          <div class="day-block">
+            <div class="day-title">2/12(木) いちご→チェックイン</div>
+            <div class="time-item"><strong>09:00</strong> 浜町発 - 朝の機嫌はガチャ。おやつでバフ入れろ。</div>
+            <div class="time-item"><strong>11:30</strong> 真岡着 - 渋滞引いても焦るな。焦るけどな。</div>
+            <div class="time-item"><strong>12:00</strong> Twins Farm 45分 - いちごで腹パン確定。昼飯？知らん。</div>
+            <div class="time-item"><strong>13:15</strong> 道の駅もてぎ - 未知の液で回復、ガキ放牧。</div>
+            <div class="time-item"><strong>15:30</strong> チェックイン - 18:00締切。遅刻は詰み。</div>
+            <div class="time-item"><strong>夜</strong> BBQ→風呂→焚き火 - 肉と湯と火で優勝。</div>
+          </div>
+          <div class="day-block">
+            <div class="day-title">2/13(金) もてぎで遊ぶ→帰宅</div>
+            <div class="time-item"><strong>06:00</strong> 朝風呂 - 目覚ましは湯気。</div>
+            <div class="time-item"><strong>10:00</strong> チェックアウト&開園 - ガキ解放の儀。</div>
+            <div class="time-item"><strong>10:00-15:00</strong> パーク遊び - 体力をゼロにする時間。</div>
+            <div class="time-item"><strong>15:00</strong> 出発 - 19:00浜町着の勝ち筋。</div>
+            <div class="time-item"><strong>18:00-19:00</strong> 浜町着 - 無事帰還。家でバタンキュー。</div>
+          </div>
+        </div>
+
+        <div class="spot-grid">
+          <div class="spot-card">
+            <img src="./assets/images/optimized/strawberry_picking.jpg" alt="twins farm" />
+            <div>
+              <h3>Twins Farm 真岡</h3>
+              <p>いちご食べ放題でガキも大人も無限化。昼飯は迷子。</p>
+            </div>
+          </div>
+          <div class="spot-card">
+            <img src="./assets/images/optimized/michinoeki.jpg" alt="michinoeki" />
+            <div>
+              <h3>道の駅もてぎ</h3>
+              <p>未知の液でHP回復。遊具でガキ放電、親は深呼吸。</p>
+            </div>
+          </div>
+          <div class="spot-card">
+            <img src="./assets/images/optimized/log_cabin.jpg" alt="camp village" />
+            <div>
+              <h3>キャンプヴィレッジ</h3>
+              <p>ログキャビンは風呂なし。時間厳守でチェックイン。</p>
+            </div>
+          </div>
+          <div class="spot-card">
+            <img src="./assets/images/optimized/onsen.jpg" alt="onsen" />
+            <div>
+              <h3>のぞみの湯</h3>
+              <p>風呂はここ頼み。冷えた体をフル回復。</p>
+            </div>
+          </div>
+          <div class="spot-card">
+            <img src="./assets/images/optimized/bbq.jpg" alt="bbq" />
+            <div>
+              <h3>持ち込みBBQ</h3>
+              <p>焼き係は忙殺。ガキには先に焼きそば投下。</p>
+            </div>
+          </div>
+          <div class="spot-card">
+            <img src="./assets/images/optimized/campfire.jpg" alt="campfire" />
+            <div>
+              <h3>焚き火タイム</h3>
+              <p>薪は追加が正義。火を囲んで静かに優勝。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">
+        <span>パーク営業時間 10:00-16:00（冬）</span>
+        <span>15:00出発で19:00浜町着の勝ち筋</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="page page-gallery">
+    <div class="page-inner">
+      <h2 class="gallery-title">遊び&泊まりのイメージ図鑑</h2>
+      <div class="gallery-grid">
+        <div class="photo-card big">
+          <img src="./assets/images/optimized/racetrack.jpg" alt="racetrack" />
+          <span class="photo-caption">もてぎ気分MAX</span>
+        </div>
+        <div class="photo-card">
+          <img src="./assets/images/optimized/attraction.jpg" alt="attraction" />
+          <span class="photo-caption">乗り物テンション</span>
+        </div>
+        <div class="photo-card">
+          <img src="./assets/images/optimized/playground.jpg" alt="playground" />
+          <span class="photo-caption">走らせろ</span>
+        </div>
+        <div class="photo-card">
+          <img src="./assets/images/optimized/forest.jpg" alt="forest" />
+          <span class="photo-caption">森で深呼吸</span>
+        </div>
+        <div class="photo-card">
+          <img src="./assets/images/optimized/night_sky.jpg" alt="night sky" />
+          <span class="photo-caption">星空で優勝</span>
+        </div>
+        <div class="photo-card">
+          <img src="./assets/images/optimized/roadtrip.jpg" alt="roadtrip" />
+          <span class="photo-caption">車旅の余韻</span>
+        </div>
+      </div>
+
+      <div class="section-box">
+        <h3>泊まりの空気感</h3>
+        <p>ログキャビンとホテル内装の雰囲気をイメージで補完。現地はもっとワイルド、心はもっとフリーダム。</p>
+      </div>
+      <div class="stay-grid">
+        <div class="photo-card"><img src="./assets/images/optimized/log_cabin.jpg" alt="log cabin" /></div>
+        <div class="photo-card"><img src="./assets/images/optimized/cabin_interior.jpg" alt="cabin interior" /></div>
+        <div class="photo-card"><img src="./assets/images/optimized/hotel_interior.jpg" alt="hotel interior" /></div>
+        <div class="photo-card"><img src="./assets/images/optimized/campfire.jpg" alt="campfire" /></div>
+        <div class="photo-card"><img src="./assets/images/optimized/bbq.jpg" alt="bbq" /></div>
+      </div>
+
+      <div class="note">※写真はイメージ。現地の雰囲気近いものを選んでるだけや。</div>
+    </div>
+  </div>
+
+  <div class="page page-prep">
+    <div class="page-inner">
+      <div class="banner">
+        <img src="./assets/images/optimized/night_sky.jpg" alt="night sky" />
+      </div>
+
+      <section class="prep-grid">
+        <div class="checklist">
+          <h2>前日までに済ませとけ</h2>
+          <ul>
+            <li>Twins Farm 12:00枠の予約メール/QR保存</li>
+            <li>BBQ食材（肉・野菜・焼きそば・ガキ用保険飯）</li>
+            <li>飲み物（夜-翌朝まで、甘いもん後の水分も）</li>
+            <li>炭・トング・チャッカマン・軍手・アルミ</li>
+            <li>薪追加1-2束（現地1束は心許ない）</li>
+            <li>防寒フル装備（手袋・帽子・厚手靴下・カイロ）</li>
+            <li>懐中電灯・ウェットティッシュ・ゴミ袋</li>
+          </ul>
+        </div>
+        <div class="rules">
+          <h2>ルール&営業時間メモ</h2>
+          <div class="rule">チェックイン 15:00-18:00 / チェックアウト 10:00</div>
+          <div class="rule">パーク 10:00-16:00（冬）</div>
+          <div class="rule">夜は消灯23:00。焚き火は焚き火台で。</div>
+          <div class="rule">入場・駐車は宿泊者無料。再入場カード忘れるな。</div>
+          <div class="rule">風呂はのぞみの湯 or 温水シャワー頼み。</div>
+        </div>
+      </section>
+
+      <div class="mini-photos">
+        <img src="./assets/images/optimized/hero_strawberry.jpg" alt="strawberry" />
+        <img src="./assets/images/optimized/strawberry_picking.jpg" alt="strawberry picking" />
+        <img src="./assets/images/optimized/michinoeki.jpg" alt="michinoeki" />
+        <img src="./assets/images/optimized/onsen.jpg" alt="onsen" />
+        <img src="./assets/images/optimized/log_cabin.jpg" alt="log cabin" />
+        <img src="./assets/images/optimized/campfire.jpg" alt="campfire" />
+      </div>
+
+      <div class="credits">
+        <strong>Photo credits (Wikimedia Commons)</strong>
+        <ul>
+          <li>Strawberry Plant with Fruit (close-up) / Alabama Extension / CC0 / https://upload.wikimedia.org/wikipedia/commons/b/b9/Strawberry_Plant_with_Fruit_%28close-up%29.jpg</li>
+<li>Strawberry greenhouse at a pick-your-own farm, near Den Burg, Texel, 2022 / DimiTalen / CC0 / https://upload.wikimedia.org/wikipedia/commons/9/9f/Strawberry_greenhouse_at_a_pick-your-own_farm%2C_near_Den_Burg%2C_Texel%2C_2022.jpg</li>
+<li>Pick strawberries Forest in Mongolia / Namuunbaigali.U / CC0 / https://upload.wikimedia.org/wikipedia/commons/7/76/Pick_strawberries_Forest_in_Mongolia.jpg</li>
+<li>Sekikawa, Michi-no-Eki, Niigata, Japan, October 2019 / Tail furry / CC BY-SA 4.0 / https://upload.wikimedia.org/wikipedia/commons/d/d9/Sekikawa%2C_Michi-no-Eki%2C_Niigata%2C_Japan%2C_October_2019.jpg</li>
+<li>Harry Potter and the Forbidden Journey (Islands of Adventure) May 2023 / Benoît Prieur / CC0 / https://upload.wikimedia.org/wikipedia/commons/e/e1/Harry_Potter_and_the_Forbidden_Journey_%28Islands_of_Adventure%29_May_2023.JPG</li>
+<li>Exterior view - Swedish Log Cabin - Zilker Botanical Garden - Austin, Texas - DSC08806 / Daderot / CC0 / https://upload.wikimedia.org/wikipedia/commons/c/c6/Exterior_view_-_Swedish_Log_Cabin_-_Zilker_Botanical_Garden_-_Austin%2C_Texas_-_DSC08806.jpg</li>
+<li>Interior view - Swedish Log Cabin - Zilker Botanical Garden - Austin, Texas - DSC08809 / Daderot / CC0 / https://upload.wikimedia.org/wikipedia/commons/0/02/Interior_view_-_Swedish_Log_Cabin_-_Zilker_Botanical_Garden_-_Austin%2C_Texas_-_DSC08809.jpg</li>
+<li>Restaurant room of Amantaka luxury Resort &amp; Hotel in Luang Prabang Laos / Basile Morin / CC BY-SA 4.0 / https://upload.wikimedia.org/wikipedia/commons/f/f3/Restaurant_room_of_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg</li>
+<li>Meadow Creek Campfire (9194201298) / Forest Service Northern Region from Missoula, MT, USA / Public domain / https://upload.wikimedia.org/wikipedia/commons/b/ba/Meadow_Creek_Campfire_%289194201298%29.jpg</li>
+<li>Brochettes de poulet mariné en fin de cuisson au barbecue (avril 2020) / Benoît Prieur / CC0 / https://upload.wikimedia.org/wikipedia/commons/d/d4/Brochettes_de_poulet_marin%C3%A9_en_fin_de_cuisson_au_barbecue_%28avril_2020%29.jpg</li>
+<li>Hot spring system in Yuzawa / Syced / CC0 / https://upload.wikimedia.org/wikipedia/commons/b/bd/Hot_spring_system_in_Yuzawa.jpg</li>
+<li>Playground in kita sando / Syced / CC0 / https://upload.wikimedia.org/wikipedia/commons/4/4d/Playground_in_kita_sando.jpg</li>
+<li>National highway of Japan Route 17 by-pass / Photo by KUMAGAYA / Public domain / https://upload.wikimedia.org/wikipedia/commons/6/6e/National_highway_of_Japan_Route_17_by-pass.jpg</li>
+<li>Killarney Race Track in Tableview Cape Town / SkyPixels / CC BY-SA 4.0 / https://upload.wikimedia.org/wikipedia/commons/2/29/Killarney_Race_Track_in_Tableview_Cape_Town.jpg</li>
+<li>-mypubliclandsroadtrip 2016- Our Camping Picks, Berryessa Snow Mountain National Monument (27256871824) / mypubliclands / Public domain / https://upload.wikimedia.org/wikipedia/commons/d/d2/-mypubliclandsroadtrip_2016-_Our_Camping_Picks%2C_Berryessa_Snow_Mountain_National_Monument_%2827256871824%29.jpg</li>
+<li>Dark forest somewhere in Japan 20170408041937 (34422555605) / Yiannis Theologos Michellis / CC0 / https://upload.wikimedia.org/wikipedia/commons/7/73/Dark_forest_somewhere_in_Japan_20170408041937_%2834422555605%29.jpg</li>
+        </ul>
+      </div>
+
+      <div class="footer">
+        <span>まとめ: 早め行動・水分補給・防寒ガチ</span>
+        <span>渋滞次第で前後するから余裕持って動く</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

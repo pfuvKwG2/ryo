@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:twinsfarm.net)",
+      "WebFetch(domain:www.mr-motegi.jp)",
+      "Bash(mkdir:*)",
+      "Bash(curl:*)"
+    ]
+  }
+}
