@@ -7,7 +7,7 @@
   <title>🍓もてぎ2DAYS ガキ連れ遠征ガイド🏕️</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Kosugi+Maru&family=Dela+Gothic+One&family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Kosugi+Maru&family=Dela+Gothic+One&family=Zen+Maru+Gothic:wght@400;700;900&family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
   <style>
     :root {
       --ink: #2a2522;
@@ -42,8 +42,13 @@
     img { max-width: 100%; }
 
     h1, h2, h3 {
-      font-family: "Dela Gothic One", "M PLUS Rounded 1c", sans-serif;
-      letter-spacing: 0.05em;
+      font-family: "Hachi Maru Pop", "M PLUS Rounded 1c", "Kosugi Maru", sans-serif;
+      letter-spacing: 0.03em;
+    }
+
+    h2 {
+      font-weight: 400;
+      letter-spacing: 0.01em;
     }
 
     .page {
@@ -629,34 +634,20 @@
     .checklist ul {
       list-style: none;
       padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
     }
 
     .checklist li {
-      padding: 10px 0 10px 35px;
-      position: relative;
+      padding: 8px 0;
+      border-bottom: 1px dashed #e0e0e0;
       font-size: 14px;
       color: var(--ink-soft);
-      border-bottom: 1px dashed #e0e0e0;
+      line-height: 1.6;
     }
 
     .checklist li:last-child { border-bottom: none; }
-
-    .checklist li::before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 24px;
-      height: 24px;
-      background: linear-gradient(135deg, var(--mint), var(--mint-light));
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      font-size: 16px;
-    }
 
     .footer {
       margin-top: 30px;
@@ -787,6 +778,316 @@
       .memo-list { grid-template-columns: 1fr; }
     }
 
+    /* 音楽プレイヤー */
+    .music-player {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--berry), var(--berry-light));
+      border-radius: 50%;
+      box-shadow: 0 8px 24px rgba(255, 51, 102, 0.4), 0 4px 12px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 4px solid white;
+      transition: all 0.3s ease;
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    .music-player:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 32px rgba(255, 51, 102, 0.6), 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .music-player.playing {
+      animation: rotate-disc 3s linear infinite, pulse-glow 2s ease-in-out infinite;
+    }
+
+    .music-player-icon {
+      font-size: 28px;
+      color: white;
+      line-height: 1;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 8px 24px rgba(255, 51, 102, 0.4), 0 4px 12px rgba(0, 0, 0, 0.2); }
+      50% { box-shadow: 0 12px 32px rgba(255, 51, 102, 0.7), 0 6px 16px rgba(0, 0, 0, 0.3); }
+    }
+
+    @keyframes rotate-disc {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* CDリリース宣伝セクション */
+    .cd-release-section {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 60px 20px;
+      margin: 40px 0 0;
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .cd-release-section::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 204, 0, 0.15), transparent 50%),
+                  radial-gradient(circle at 70% 60%, rgba(255, 51, 102, 0.15), transparent 50%);
+      animation: bg-shift 20s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes bg-shift {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(10px, 10px) rotate(5deg); }
+    }
+
+    .cd-release-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .new-release-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff0844, #ffb199);
+      color: white;
+      font-size: 18px;
+      font-weight: 900;
+      padding: 10px 24px;
+      border-radius: 999px;
+      box-shadow: 0 6px 20px rgba(255, 8, 68, 0.5);
+      margin-bottom: 20px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 3px solid white;
+      animation: badge-float 3s ease-in-out infinite;
+    }
+
+    @keyframes badge-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .cd-title {
+      font-size: 56px;
+      font-family: "Hachi Maru Pop", "M PLUS Rounded 1c", cursive;
+      background: linear-gradient(135deg, #fff, #ffe066);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 15px 0;
+      text-shadow: 0 4px 20px rgba(255, 204, 0, 0.5);
+      filter: drop-shadow(0 2px 8px rgba(255, 204, 0, 0.3));
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .cd-subtitle {
+      color: #fff;
+      font-size: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+      opacity: 0.9;
+      letter-spacing: 0.05em;
+    }
+
+    .cd-showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      margin: 30px 0;
+    }
+
+    .cd-artwork-wrapper {
+      position: relative;
+      perspective: 1000px;
+    }
+
+    .cd-artwork {
+      width: 100%;
+      max-width: 400px;
+      aspect-ratio: 1;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6),
+                  0 0 0 8px rgba(255, 255, 255, 0.1),
+                  0 0 0 16px rgba(255, 255, 255, 0.05);
+      transition: transform 0.5s ease;
+      animation: cd-float 6s ease-in-out infinite;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .cd-artwork:hover {
+      transform: rotateY(10deg) rotateX(5deg) scale(1.05);
+    }
+
+    @keyframes cd-float {
+      0%, 100% { transform: translateY(0) rotateZ(0deg); }
+      50% { transform: translateY(-15px) rotateZ(2deg); }
+    }
+
+    .cd-details {
+      color: white;
+    }
+
+    .cd-details h3 {
+      font-size: 28px;
+      color: var(--sun);
+      margin-bottom: 20px;
+      font-family: "Hachi Maru Pop", cursive;
+    }
+
+    .tracklist {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    .tracklist li {
+      padding: 12px 18px;
+      margin: 8px 0;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      border-left: 4px solid var(--sun);
+      font-size: 16px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .tracklist li:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(8px);
+      border-left-color: var(--berry-light);
+    }
+
+    .track-number {
+      display: inline-block;
+      min-width: 32px;
+      color: var(--sun-light);
+      font-weight: 900;
+    }
+
+    .cd-specs {
+      margin-top: 30px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      border: 2px solid rgba(255, 204, 0, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .cd-specs p {
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 8px 0;
+      opacity: 0.9;
+    }
+
+    .cd-specs strong {
+      color: var(--sun-light);
+    }
+
+    .cd-price {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .price-tag {
+      display: inline-block;
+      font-size: 48px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ff0844, #ffb199);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 4px 12px rgba(255, 8, 68, 0.5));
+      margin-bottom: 10px;
+    }
+
+    .price-note {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 16px;
+    }
+
+    .buy-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 18px 48px;
+      background: linear-gradient(135deg, var(--sun), var(--sun-light));
+      color: var(--ink);
+      font-size: 20px;
+      font-weight: 900;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(255, 204, 0, 0.4);
+      transition: all 0.3s ease;
+      border: 4px solid white;
+      letter-spacing: 0.05em;
+    }
+
+    .buy-button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(255, 204, 0, 0.6);
+    }
+
+    @media (max-width: 768px) {
+      .music-player {
+        bottom: 16px;
+        right: 16px;
+        width: 56px;
+        height: 56px;
+      }
+
+      .music-player-icon {
+        font-size: 24px;
+      }
+
+      .cd-showcase {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .cd-title {
+        font-size: 36px;
+      }
+
+      .cd-subtitle {
+        font-size: 16px;
+      }
+
+      .cd-details h3 {
+        font-size: 22px;
+      }
+
+      .tracklist li {
+        font-size: 14px;
+        padding: 10px 14px;
+      }
+
+      .price-tag {
+        font-size: 36px;
+      }
+
+      .buy-button {
+        padding: 14px 36px;
+        font-size: 18px;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       * { animation: none !important; transition: none !important; }
     }
@@ -868,14 +1169,6 @@
         ログキャビン9㎡に大人2＋ガキ2で寝る。部屋に風呂なし。BBQは全部自分で持ってく。ポップコーン作って焚き火して終わり。これで旅行とか言ってええんか？</p>
       </div>
 
-      <div class="speech-bubble" style="border-color: var(--mint);">
-        <h3>🎯 成功の鍵</h3>
-        <p><strong>✓</strong> チェックイン18:00締切。遅刻したら「詰み」確定で草。<br>
-        <strong>✓</strong> いちご後の昼飯は胃袋ストライキ。水分だけで耐えろ。<br>
-        <strong>✓</strong> 薪1束は瞬殺。追い薪しないと焚き火が即終了やで。<br>
-        <strong>✓</strong> 最終日は15:00撤収が勝ち筋。渋滞ガチャ外したら泣け。</p>
-      </div>
-
       <div class="footer">
         🏃‍♂️ 大人2 + ガキ2（添い寝） | 宿泊者特典：入場・駐車無料
       </div>
@@ -944,7 +1237,7 @@
           </div>
           <div class="time-row-with-photo">
             <div class="time">10:00<br>-15:00</div>
-            <div class="activity"><strong>🎢 もてぎパークで遊ぶ</strong><br>営業10:00-16:00（冬は早仕舞い）。カート、アスレチック、ジップライン全部やれ。</div>
+            <div class="activity"><strong>🎢 モビリティパークで遊ぶ</strong><br>営業10:00-16:00（冬は早仕舞い）。アトラクションもコース周辺も全体攻略や。</div>
             <img src="./assets/images/optimized/motegi_park_2.jpg" alt="パーク" class="photo-thumbnail">
           </div>
           <div class="time-row">
@@ -1007,6 +1300,9 @@
             <img src="./assets/images/optimized/michinoeki_food.jpg" alt="ゆず塩ラーメン">
             <img src="./assets/images/optimized/motegi_michinoeki_1.jpg" alt="道の駅外観">
             <img src="./assets/images/optimized/motegi_michinoeki_2.jpg" alt="道の駅施設">
+            <img src="./assets/images/optimized/michinoeki_extra_1.jpg" alt="道の駅追加1">
+            <img src="./assets/images/optimized/michinoeki_extra_2.jpg" alt="道の駅追加2">
+            <img src="./assets/images/optimized/michinoeki_extra_3.jpg" alt="道の駅追加3">
             <img src="./assets/images/optimized/michinoeki_park.jpg" alt="公園">
           </div>
           <button class="slider-btn next" type="button" aria-label="次へ">&#8250;</button>
@@ -1031,20 +1327,23 @@
       </div>
 
       <div class="facility-section">
-        <h3>🎢 もてぎパーク（ハローウッズ）</h3>
-        <p>カート、アスレチック、ジップライン、森の工作体験。ガキが喜ぶやつ全部ある。営業10:00-16:00で冬は早仕舞い。体力ゼロまで遊ばせて車で即寝させるのが正解。</p>
+        <h3>🎢 モビリティパーク（全体）</h3>
+        <p>ハローウッズだけやなくて、アトラクション＋レーシングコース周辺＋モビリティプラザまで含めて全域制覇や。営業10:00-16:00（冬は早仕舞い）。体力ゼロまで遊ばせて車で即寝が正解。</p>
         <div class="photo-slider" data-slider>
           <button class="slider-btn prev" type="button" aria-label="前へ">&#8249;</button>
           <div class="photo-grid">
-            <img src="./assets/images/optimized/motegi_park_1.jpg" alt="パーク1">
-            <img src="./assets/images/optimized/motegi_park_2.jpg" alt="パーク2">
-            <img src="./assets/images/optimized/motegi_park_4.jpg" alt="パーク3">
-            <img src="./assets/images/optimized/motegi_attraction_carbike2.jpg" alt="カート">
-            <img src="./assets/images/optimized/motegi_attraction_carbike3.jpg" alt="乗り物">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJRKSnK9yF6X0zlNdEmpk4AOTvlXR3yNVO7g&s" alt="もてぎパーク新画像1">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcBEJZs0VknumNOx_s777blV1AcXQljzd1rg&s" alt="もてぎパーク新画像2">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTglmrCJpJTq1fyEVpDd9MaRtUuHFu1x_fgFg&s" alt="もてぎパーク新画像3">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgunJhXLfLVJ9lICLWX3xtayY5xyRhDW1mYA&s" alt="もてぎパーク新画像4">
+            <img src="./assets/images/optimized/motegi_park_1.jpg" alt="モビリティパーク1">
+            <img src="./assets/images/optimized/motegi_park_2.jpg" alt="モビリティパーク2">
+            <img src="./assets/images/optimized/motegi_mobi_plaza.jpg" alt="モビリティプラザ">
+            <img src="./assets/images/optimized/motegi_circuit.jpg" alt="レーシングコース">
+            <img src="./assets/images/optimized/motegi_speedway.jpg" alt="スピードウェイ">
+            <img src="./assets/images/optimized/motegi_grandstand.jpg" alt="グランドスタンド">
+            <img src="./assets/images/optimized/motegi_attraction_carbike2.jpg" alt="アトラクション">
+            <img src="./assets/images/optimized/motegi_attraction_carbike3.jpg" alt="モビリティアトラクション">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJRKSnK9yF6X0zlNdEmpk4AOTvlXR3yNVO7g&s" alt="モビリティパーク新画像1">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcBEJZs0VknumNOx_s777blV1AcXQljzd1rg&s" alt="モビリティパーク新画像2">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTglmrCJpJTq1fyEVpDd9MaRtUuHFu1x_fgFg&s" alt="モビリティパーク新画像3">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgunJhXLfLVJ9lICLWX3xtayY5xyRhDW1mYA&s" alt="モビリティパーク新画像4">
           </div>
           <button class="slider-btn next" type="button" aria-label="次へ">&#8250;</button>
         </div>
@@ -1071,10 +1370,10 @@
   <div class="page">
     <div class="bg-deco"></div>
     <div class="content">
-      <h2 style="font-size: 32px; color: var(--mint); margin-bottom: 20px; text-align: center;">✅ 前日までにやっとけリスト</h2>
+      <h2 style="font-size: 32px; color: var(--mint); margin-bottom: 20px; text-align: center;">✅ 当日までにやっとけリスト</h2>
 
       <div class="checklist">
-        <h2>📋 予約・手配</h2>
+        <h2>予約・手配</h2>
         <ul>
           <li>益子観光いちご団地 12:00枠の予約確認（スマホに入れとけ）</li>
           <li>宿の予約票保存（ゲートで名前照合ある）</li>
@@ -1083,7 +1382,7 @@
       </div>
 
       <div class="checklist">
-        <h2>🍖 BBQ食材（素泊まり＝飯は自力）</h2>
+        <h2>BBQ食材（素泊まり＝飯は自力）</h2>
         <ul>
           <li>肉（焼きやすいの多め：ウインナー/豚バラ/鶏もも）</li>
           <li>野菜（カット済み）＋ 焼きそばセット</li>
@@ -1094,7 +1393,7 @@
       </div>
 
       <div class="checklist">
-        <h2>🔥 火まわり</h2>
+        <h2>火まわり</h2>
         <ul>
           <li>炭（BBQ用。プランに含まれてないから持参必須）</li>
           <li>着火道具：チャッカマン・軍手・トング</li>
@@ -1103,10 +1402,10 @@
       </div>
 
       <div class="checklist">
-        <h2>🧥 防寒・持ち物（2月は舐めたら泣く）</h2>
+        <h2>防寒・持ち物（2月は舐めたら泣く）</h2>
         <ul>
           <li>ガキ用：手袋・帽子・厚手靴下・替え服一式</li>
-          <li>大人：防寒着・カイロ（2月の栃木なめんな）</li>
+          <li>大人：防寒着・カイロ（焚き火の時間外は普通に寒い）</li>
           <li>懐中電灯/ヘッドライト（夜の移動で地味に便利）</li>
           <li>ウェットティッシュ・ゴミ袋・ビニール袋</li>
         </ul>
@@ -1159,7 +1458,7 @@
           <li><a href="https://www.google.com/search?q=益子観光いちご団地" target="_blank" rel="noopener">益子観光いちご団地</a></li>
           <li><a href="https://www.google.com/search?q=道の駅もてぎ" target="_blank" rel="noopener">道の駅もてぎ</a></li>
           <li><a href="https://www.google.com/search?q=モビリティリゾートもてぎ+ログキャビン" target="_blank" rel="noopener">森と星空のキャンプヴィレッジ（ログキャビン）</a></li>
-          <li><a href="https://www.google.com/search?q=もてぎパーク+ハローウッズ" target="_blank" rel="noopener">もてぎパーク（ハローウッズ）</a></li>
+          <li><a href="https://www.google.com/search?q=モビリティリゾートもてぎ+モビリティパーク" target="_blank" rel="noopener">モビリティパーク（全体）</a></li>
           <li><a href="https://www.google.com/search?q=のぞみの湯+もてぎ" target="_blank" rel="noopener">のぞみの湯</a></li>
         </ul>
         <div class="note">※ 公式URLが分かったら差し替えでOK。</div>
@@ -1213,8 +1512,15 @@
         <div class="memo-section">
           <h4>チケット</h4>
           <dl class="memo-list">
-            <dt>調査メモ</dt><dd>アソビューの「もてぎパーク ファミリープラン」が安そう。価格は要確認。</dd>
-            <dt>検索リンク</dt><dd><a href="https://www.google.com/search?q=アソビュー+もてぎパーク+ファミリープラン" target="_blank" rel="noopener">アソビュー もてぎパーク ファミリープラン</a></dd>
+            <dt>プラン名</dt><dd>【入場無料】子育てファミリー応援キャンペーン（入場無料＋1日乗り放題パスポート）</dd>
+            <dt>対象</dt><dd>0歳~高校生までのお子さまがいるファミリー限定</dd>
+            <dt>内容</dt><dd>入場無料＋対象アトラクション乗り放題パスポート</dd>
+            <dt>大人（中学生以上）</dt><dd>3,400円（35% OFF / 通常より1,900円お得）</dd>
+            <dt>子ども（小学生）</dt><dd>3,400円（20% OFF / 通常より900円お得）</dd>
+            <dt>幼児（3歳~未就学児）</dt><dd>2,200円（29% OFF / 通常より900円お得）</dd>
+            <dt>3歳未満</dt><dd>無料</dd>
+            <dt>駐車券（4輪）</dt><dd>1,000円</dd>
+            <dt>参照ページ</dt><dd><a href="https://www.asoview.com/channel/ticket/ghGdhJc5yE/ticket0000035455/" target="_blank" rel="noopener">アソビュー もてぎパーク ファミリープラン</a></dd>
           </dl>
         </div>
 
@@ -1233,11 +1539,70 @@
     </div>
   </div>
 
+  <!-- CD宣伝セクション -->
+  <div class="page">
+    <div class="bg-deco"></div>
+    <div class="content">
+      <section class="cd-release-section">
+        <div class="cd-release-content">
+          <div style="text-align: center;">
+            <span class="new-release-badge">🔥 NEW RELEASE!! 🔥</span>
+          </div>
+
+          <h2 class="cd-title">もてぎの旅</h2>
+          <p class="cd-subtitle">旅の思い出を綴った感動の1枚</p>
+
+          <div class="cd-showcase">
+            <div class="cd-artwork-wrapper">
+              <img src="./moteginotabi.png" alt="もてぎの旅 アルバムカバー" class="cd-artwork">
+            </div>
+
+            <div class="cd-details">
+              <h3>💿 収録内容</h3>
+              <ul class="tracklist">
+                <li><span class="track-number">01.</span> もてぎの旅</li>
+              </ul>
+
+              <div class="cd-specs">
+                <p><strong>発売日:</strong> 2026年2月12日(木)</p>
+                <p><strong>レーベル:</strong> ガキ連れ遠征Records</p>
+                <p><strong>プロデューサー:</strong> パパ featuring ママ</p>
+                <p><strong>録音場所:</strong> もてぎの森、益子いちご団地、ヴィッツ車内</p>
+                <p><strong>特典:</strong> 初回限定版にはログキャビン宿泊券付き</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cd-price">
+            <div class="price-tag">¥2,980</div>
+            <p class="price-note">税込・送料別 / 配信ストリーミング同時リリース</p>
+            <a href="#" class="buy-button" onclick="return false;">
+              🛒 今すぐ購入
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer" style="margin-top: 40px; padding-top: 20px; border-top: 2px dashed rgba(255,255,255,0.3); color: rgba(255,255,255,0.6);">
+        <p>🎵 良い旅を。良い思い出を作ろうぜ！ 🍓🏕️</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 音楽プレイヤー -->
+  <div class="music-player" id="musicPlayer" title="音楽を再生/停止">
+    <span class="music-player-icon">🎵</span>
+  </div>
+  <audio id="bgMusic" loop>
+    <source src="./moteginotabihe.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
     (() => {
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const behavior = prefersReduced ? "auto" : "smooth";
 
+      // スライダー機能
       document.querySelectorAll("[data-slider]").forEach((slider) => {
         const track = slider.querySelector(".photo-grid");
         const prev = slider.querySelector(".slider-btn.prev");
@@ -1254,6 +1619,37 @@
           track.scrollBy({ left: scrollAmount(), behavior });
         });
       });
+
+      // 音楽プレイヤー機能
+      const musicPlayer = document.getElementById("musicPlayer");
+      const bgMusic = document.getElementById("bgMusic");
+      const playerIcon = musicPlayer.querySelector(".music-player-icon");
+      let isPlaying = false;
+
+      musicPlayer.addEventListener("click", () => {
+        if (isPlaying) {
+          bgMusic.pause();
+          playerIcon.textContent = "🎵";
+          musicPlayer.classList.remove("playing");
+          isPlaying = false;
+        } else {
+          bgMusic.play().catch(err => {
+            console.log("音楽の再生に失敗しました:", err);
+            alert("音楽を再生できませんでした。ブラウザの設定を確認してください。");
+          });
+          playerIcon.textContent = "⏸️";
+          musicPlayer.classList.add("playing");
+          isPlaying = true;
+        }
+      });
+
+      // 音楽が終了したときの処理
+      bgMusic.addEventListener("ended", () => {
+        playerIcon.textContent = "🎵";
+        musicPlayer.classList.remove("playing");
+        isPlaying = false;
+      });
+
     })();
   </script>
 
